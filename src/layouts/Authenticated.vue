@@ -15,7 +15,6 @@
       </div>
     </SidebarInset>
   </SidebarProvider>
-  <SearchCommand ref="searchCommandRef" />
 </template>
 
 <script setup lang="ts">

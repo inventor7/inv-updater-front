@@ -44,20 +44,16 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const { showToast } = useToast()
 
-// Get the SearchCommand instance to call its methods
 const searchCommandRef = ref<InstanceType<typeof SearchCommand> | null>(null)
 
-// Function to open the command palette
 const openCommandPalette = () => {
   if (searchCommandRef.value?.openCommandPalette) {
     searchCommandRef.value.openCommandPalette()
   }
 }
 
-// Contact support function
 const contactSupport = () => {
   showToast(t('404.support_contacted', 'Support contacted'), 'success')
-  // In a real implementation, this would open a support modal or redirect
   console.log('Contact support action triggered')
 }
 

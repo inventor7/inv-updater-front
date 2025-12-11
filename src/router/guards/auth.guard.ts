@@ -7,7 +7,7 @@ export const useAuthGuard = (
 ) => {
   const authStore = useAuthStore()
 
-  if (to.meta.layout === 'public') next()
+  if (to.meta.layout === 'public') return next()
 
   const { isAuthenticated } = storeToRefs(authStore)
   if ((to.meta.requiresAuth === undefined || to.meta.requiresAuth) && !isAuthenticated.value) {

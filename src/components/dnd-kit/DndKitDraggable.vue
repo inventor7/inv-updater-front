@@ -23,13 +23,11 @@ const props = defineProps<DndKitDraggableProps>()
 const isDragging = ref(false)
 
 const handleDragStart = (event: DragEvent) => {
-  console.log('DndKitDraggable handleDragStart called', { event, props })
   if (props.disabled) return
   isDragging.value = true
   if (event.dataTransfer) {
     event.dataTransfer.setData('text/plain', props.id)
     event.dataTransfer.setData('application/json', JSON.stringify(props.data || {}))
-    console.log('Set data to dataTransfer:', props.data)
     event.dataTransfer.effectAllowed = 'move'
   }
 }

@@ -83,7 +83,6 @@ export function useAuthenticatedQuery<TData = unknown>(
     queryFn: async () => {
       try {
         const response = await apiClient.get(url)
-        // Extract the data array from the API response if it has the expected structure
         if (
           typeof response.data === 'object' &&
           response.data !== null &&
@@ -91,7 +90,6 @@ export function useAuthenticatedQuery<TData = unknown>(
         ) {
           return (response.data as ApiResponse<TData>).data
         }
-        // Return the original data if it doesn't match the expected structure
         return response.data
       } catch (error) {
         if (error instanceof Error && error.message.includes('401')) {

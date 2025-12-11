@@ -3,11 +3,12 @@
     <SidebarHeader>
       <StoreSwitcher :stores="apps" />
     </SidebarHeader>
-    <SidebarContent>
-      <NavMain :items="storeDashboard" group-name="Dashboard" />
-      <NavMain :items="storeEssentials" group-name="Product" />
+    <SidebarContent class="flex flex-col justify-between items-start h-full">
+      <div class="w-full">
+        <NavMain :items="storeDashboard" group-name="Dashboard" />
+        <NavMain :items="storeEssentials" group-name="Modules" />
+      </div>
       <NavMain :items="storeSettings" group-name="Settings" />
-      <!-- <NavSecondary :items="navSecondary" class="mt-auto" /> -->
     </SidebarContent>
     <SidebarFooter>
       <NavUser :user="navUser" />
@@ -23,20 +24,14 @@ import StoreSwitcher from './StoreSwitcher.vue'
 
 import type { SidebarProps } from '@/components/ui/sidebar'
 import {
-  BarChart3,
   Home,
   LifeBuoy,
-  Megaphone,
-  MessagesSquare,
-  Package,
   Settings,
-  ShoppingBag,
-  Store,
-  Tv2,
-  Users,
-  Phone,
-  Book,
-  Wrench,
+  GitBranch,
+  Smartphone,
+  GraduationCap,
+  Rocket,
+  Radio,
 } from 'lucide-vue-next'
 
 const props = withDefaults(defineProps<SidebarProps>(), {
@@ -55,17 +50,17 @@ const navUser = {
 const apps = [
   {
     name: 'Vuena',
-    logo: Phone,
+    logo: Smartphone,
     plan: 'Enterprise',
   },
   {
     name: 'E-lmni',
-    logo: Book,
+    logo: GraduationCap,
     plan: 'Startup',
   },
   {
     name: 'Vueta',
-    logo: Tv2,
+    logo: Rocket,
     plan: 'Free',
   },
 ]
@@ -73,32 +68,46 @@ const apps = [
 const storeDashboard = [
   {
     title: 'Dashboard',
-    url: '/dashboard',
+    url: '/dashboard/',
     icon: Home,
     isActive: true,
   },
 ]
 const storeEssentials = [
   {
-    title: 'Products',
-    url: '/products',
-    icon: Package,
+    title: 'Updates & Bundles',
+    url: '/updates-bundles',
+    icon: GitBranch,
     items: [
       {
-        title: 'All Products',
-        url: '/products',
+        title: 'All Updates & Bundles',
+        url: '/updates-bundles',
       },
       {
-        title: 'Categories',
-        url: '/products/categories',
+        title: 'Upload Update/Bundle',
+        url: '/updates-bundles/upload',
       },
+    ],
+  },
+  {
+    title: 'Channels',
+    url: '/channels',
+    icon: Radio,
+    items: [
       {
-        title: 'Inventory',
-        url: '/inventory',
+        title: 'All Channels',
+        url: '/channels',
       },
+    ],
+  },
+  {
+    title: 'Devices',
+    url: '/devices',
+    icon: Smartphone,
+    items: [
       {
-        title: 'Add Product',
-        url: '/products/new',
+        title: 'All Devices',
+        url: '/devices',
       },
     ],
   },

@@ -38,6 +38,13 @@ declare global {
   const CardFooter: typeof import('./src/components/ui/card/index').CardFooter
   const CardHeader: typeof import('./src/components/ui/card/index').CardHeader
   const CardTitle: typeof import('./src/components/ui/card/index').CardTitle
+  const ChannelDistributionChart: typeof import('./src/modules/statistics/components/index').ChannelDistributionChart
+  const ChannelsTable: typeof import('./src/modules/channels/index').ChannelsTable
+  const ChartContainer: typeof import('./src/components/ui/chart/index').ChartContainer
+  const ChartCrosshair: typeof import('./src/components/ui/chart/index').ChartCrosshair
+  const ChartLegendContent: typeof import('./src/components/ui/chart/index').ChartLegendContent
+  const ChartTooltip: typeof import('./src/components/ui/chart/index').ChartTooltip
+  const ChartTooltipContent: typeof import('./src/components/ui/chart/index').ChartTooltipContent
   const Checkbox: typeof import('./src/components/ui/checkbox/index').Checkbox
   const Collapsible: typeof import('./src/components/ui/collapsible/index').Collapsible
   const CollapsibleContent: typeof import('./src/components/ui/collapsible/index').CollapsibleContent
@@ -52,7 +59,10 @@ declare global {
   const CommandSeparator: typeof import('./src/components/ui/command/index').CommandSeparator
   const CommandShortcut: typeof import('./src/components/ui/command/index').CommandShortcut
   const DEFAULT_DELIVERY_PRICES: typeof import('./src/utils/constants').DEFAULT_DELIVERY_PRICES
+  const DataTable: typeof import('./src/components/common/DataTable/index').DataTable
   const DatePickerRange: typeof import('./src/components/ui/date-picker/index').DatePickerRange
+  const DeviceDistributionChart: typeof import('./src/modules/statistics/components/index').DeviceDistributionChart
+  const DevicesTable: typeof import('./src/modules/devices/index').DevicesTable
   const Dialog: typeof import('./src/components/ui/dialog/index').Dialog
   const DialogClose: typeof import('./src/components/ui/dialog/index').DialogClose
   const DialogContent: typeof import('./src/components/ui/dialog/index').DialogContent
@@ -95,7 +105,6 @@ declare global {
   const Kbd: typeof import('./src/components/ui/kbd/index').Kbd
   const KbdGroup: typeof import('./src/components/ui/kbd/index').KbdGroup
   const Label: typeof import('./src/components/ui/label/index').Label
-  const Product: typeof import('./src/modules/products/index').Product
   const Progress: typeof import('./src/components/ui/progress/index').Progress
   const QueryError: typeof import('./src/composables/api/error/query-error-handler').QueryError
   const RadioGroup: typeof import('./src/components/ui/radio-group/index').RadioGroup
@@ -151,6 +160,7 @@ declare global {
   const SidebarTrigger: typeof import('./src/components/ui/sidebar/index').SidebarTrigger
   const Skeleton: typeof import('./src/components/ui/skeleton/index').Skeleton
   const Switch: typeof import('./src/components/ui/switch/index').Switch
+  const THEMES: typeof import('./src/components/ui/chart/index').THEMES
   const Table: typeof import('./src/components/ui/table/index').Table
   const TableBody: typeof import('./src/components/ui/table/index').TableBody
   const TableCaption: typeof import('./src/components/ui/table/index').TableCaption
@@ -171,6 +181,9 @@ declare global {
   const TooltipContent: typeof import('./src/components/ui/tooltip/index').TooltipContent
   const TooltipProvider: typeof import('./src/components/ui/tooltip/index').TooltipProvider
   const TooltipTrigger: typeof import('./src/components/ui/tooltip/index').TooltipTrigger
+  const UpdateDownloadsChart: typeof import('./src/modules/statistics/components/index').UpdateDownloadsChart
+  const UpdatesBundlesHeader: typeof import('./src/modules/updates-bundles/index').UpdatesBundlesHeader
+  const UpdatesBundlesTable: typeof import('./src/modules/updates-bundles/index').UpdatesBundlesTable
   const VueQueryPlugin: typeof import('./src/composables/api/index').VueQueryPlugin
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
   const apiClient: typeof import('./src/services/api.client').apiClient
@@ -179,9 +192,12 @@ declare global {
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
   const badgeVariants: typeof import('./src/components/ui/badge/index').badgeVariants
   const buttonVariants: typeof import('./src/components/ui/button/index').buttonVariants
+  const channelsColumns: typeof import('./src/modules/channels/components/ChannelsTable/channels.columns').channelsColumns
+  const chartVariants: typeof import('./src/components/ui/chart/chart-config').chartVariants
   const clearTableState: typeof import('./src/utils/tables.utils').clearTableState
   const cn: typeof import('./src/lib/utils').cn
   const columns: typeof import('./src/modules/products/components/ProductsTable/products.columns').columns
+  const componentToString: typeof import('./src/components/ui/chart/utils').componentToString
   const computed: typeof import('vue').computed
   const computedAsync: typeof import('@vueuse/core').computedAsync
   const computedEager: typeof import('@vueuse/core').computedEager
@@ -211,6 +227,7 @@ declare global {
   const defineAsyncComponent: typeof import('vue').defineAsyncComponent
   const defineComponent: typeof import('vue').defineComponent
   const defineStore: typeof import('pinia').defineStore
+  const devicesColumns: typeof import('./src/modules/devices/components/DevicesTable/devices.columns').devicesColumns
   const eagerComputed: typeof import('@vueuse/core').eagerComputed
   const effectScope: typeof import('vue').effectScope
   const emptyMediaVariants: typeof import('./src/components/ui/empty/index').emptyMediaVariants
@@ -220,6 +237,7 @@ declare global {
   const formatBytes: typeof import('./src/utils/tables.utils').formatBytes
   const formatCurrency: typeof import('./src/utils/tables.utils').formatCurrency
   const formatDate: typeof import('./src/utils/tables.utils').formatDate
+  const generateClusteredDevices: typeof import('./src/modules/devices/composables/useGenerateDevices').generateClusteredDevices
   const generateId: typeof import('./src/utils/tables.utils').generateId
   const getActivePinia: typeof import('pinia').getActivePinia
   const getColumnStats: typeof import('./src/utils/tables.utils').getColumnStats
@@ -280,6 +298,7 @@ declare global {
   const products: typeof import('./src/modules/products/stores/fake/products.fakes').products
   const productsService: typeof import('./src/services/products.service').productsService
   const provide: typeof import('vue').provide
+  const provideChartContext: typeof import('./src/components/ui/chart/index').provideChartContext
   const provideCommandContext: typeof import('./src/components/ui/command/index').provideCommandContext
   const provideCommandGroupContext: typeof import('./src/components/ui/command/index').provideCommandGroupContext
   const provideLocal: typeof import('@vueuse/core').provideLocal
@@ -332,8 +351,12 @@ declare global {
   const unref: typeof import('vue').unref
   const unrefElement: typeof import('@vueuse/core').unrefElement
   const until: typeof import('@vueuse/core').until
+  const updatesBundlesColumns: typeof import('./src/modules/updates-bundles/components/UpdatesBundlesTable/updates-bundles.columns').updatesBundlesColumns
+  const updatesBundlesTableConfig: typeof import('./src/modules/updates-bundles/config/updatesbundlesetable.config').updatesBundlesTableConfig
+  const usUpdatesBundleseDataTable: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesDataTable').usUpdatesBundleseDataTable
   const useActiveElement: typeof import('@vueuse/core').useActiveElement
   const useAnimate: typeof import('@vueuse/core').useAnimate
+  const useApiFormDataMutation: typeof import('./src/composables/api/config/useApiFormDataMutation').useApiFormDataMutation
   const useApiMutation: typeof import('./src/composables/api/config/useApiQuery').useApiMutation
   const useApiQuery: typeof import('./src/composables/api/config/useApiQuery').useApiQuery
   const useArrayDifference: typeof import('@vueuse/core').useArrayDifference
@@ -359,7 +382,12 @@ declare global {
   const useBreakpoints: typeof import('@vueuse/core').useBreakpoints
   const useBroadcastChannel: typeof import('@vueuse/core').useBroadcastChannel
   const useBrowserLocation: typeof import('@vueuse/core').useBrowserLocation
+  const useBundleQuery: typeof import('./src/modules/updates-bundles/index').useBundleQuery
+  const useBundlesQuery: typeof import('./src/modules/updates-bundles/index').useBundlesQuery
   const useCached: typeof import('@vueuse/core').useCached
+  const useChannelsQuery: typeof import('./src/modules/channels/index').useChannelsQuery
+  const useChannelsStore: typeof import('./src/modules/channels/stores/channels.store').useChannelsStore
+  const useChart: typeof import('./src/components/ui/chart/index').useChart
   const useClipboard: typeof import('@vueuse/core').useClipboard
   const useClipboardItems: typeof import('@vueuse/core').useClipboardItems
   const useCloned: typeof import('@vueuse/core').useCloned
@@ -372,7 +400,11 @@ declare global {
   const useCountdown: typeof import('@vueuse/core').useCountdown
   const useCounter: typeof import('@vueuse/core').useCounter
   const useCounterStore: typeof import('./src/stores/counter').useCounterStore
+  const useCreateBundleFormDataMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useCreateBundleFormDataMutation
+  const useCreateBundleMutation: typeof import('./src/modules/updates-bundles/index').useCreateBundleMutation
   const useCreateConversationMutation: typeof import('./src/composables/api/conversations/useConversationsQuery').useCreateConversationMutation
+  const useCreateNativeUpdateFormDataMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useCreateNativeUpdateFormDataMutation
+  const useCreateNativeUpdateMutation: typeof import('./src/modules/updates-bundles/index').useCreateNativeUpdateMutation
   const useCreateOrderMutation: typeof import('./src/composables/api/orders/useOrdersQuery').useCreateOrderMutation
   const useCreateProductMutation: typeof import('./src/composables/api/products/useProductsQuery').useCreateProductMutation
   const useCssModule: typeof import('vue').useCssModule
@@ -381,19 +413,28 @@ declare global {
   const useCurrentElement: typeof import('@vueuse/core').useCurrentElement
   const useCycleList: typeof import('@vueuse/core').useCycleList
   const useDark: typeof import('@vueuse/core').useDark
-  const useDataTable: typeof import('./src/modules/products/composables/useDataTable').useDataTable
+  const useDashboardStatsDataQuery: typeof import('./src/modules/statistics/index').useDashboardStatsDataQuery
+  const useDashboardStatsQuery: typeof import('./src/modules/statistics/index').useDashboardStatsQuery
+  const useDataTable: typeof import('./src/components/common/DataTable/useDataTable').useDataTable
   const useDateFormat: typeof import('@vueuse/core').useDateFormat
   const useDebounce: typeof import('@vueuse/core').useDebounce
   const useDebounceFn: typeof import('@vueuse/core').useDebounceFn
   const useDebouncedRefHistory: typeof import('@vueuse/core').useDebouncedRefHistory
+  const useDeleteBundleMutation: typeof import('./src/modules/updates-bundles/index').useDeleteBundleMutation
+  const useDeleteChannelMutation: typeof import('./src/modules/channels/index').useDeleteChannelMutation
   const useDeleteConversationMutation: typeof import('./src/composables/api/conversations/useConversationsQuery').useDeleteConversationMutation
+  const useDeleteDeviceMutation: typeof import('./src/modules/devices/index').useDeleteDeviceMutation
   const useDeleteMessageMutation: typeof import('./src/composables/api/conversations/useMessagesQuery').useDeleteMessageMutation
+  const useDeleteNativeUpdateMutation: typeof import('./src/modules/updates-bundles/index').useDeleteNativeUpdateMutation
   const useDeleteOrderMutation: typeof import('./src/composables/api/orders/useOrdersQuery').useDeleteOrderMutation
   const useDeleteProductMutation: typeof import('./src/composables/api/products/useProductsQuery').useDeleteProductMutation
   const useDeviceMotion: typeof import('@vueuse/core').useDeviceMotion
   const useDeviceOrientation: typeof import('@vueuse/core').useDeviceOrientation
   const useDevicePixelRatio: typeof import('@vueuse/core').useDevicePixelRatio
+  const useDevicesDataTable: typeof import('./src/modules/devices/composables/useDevicesDataTable').useDevicesDataTable
   const useDevicesList: typeof import('@vueuse/core').useDevicesList
+  const useDevicesQuery: typeof import('./src/modules/devices/index').useDevicesQuery
+  const useDevicesStore: typeof import('./src/modules/devices/stores/devices.store').useDevicesStore
   const useDisplayMedia: typeof import('@vueuse/core').useDisplayMedia
   const useDocumentVisibility: typeof import('@vueuse/core').useDocumentVisibility
   const useDraggable: typeof import('@vueuse/core').useDraggable
@@ -416,6 +457,7 @@ declare global {
   const useFps: typeof import('@vueuse/core').useFps
   const useFullscreen: typeof import('@vueuse/core').useFullscreen
   const useGamepad: typeof import('@vueuse/core').useGamepad
+  const useGenerateClusteredDevices: typeof import('./src/modules/devices/composables/useGenerateDevices').useGenerateClusteredDevices
   const useGeolocation: typeof import('@vueuse/core').useGeolocation
   const useI18n: typeof import('vue-i18n').useI18n
   const useId: typeof import('vue').useId
@@ -439,17 +481,21 @@ declare global {
   const useMemory: typeof import('@vueuse/core').useMemory
   const useMessageQuery: typeof import('./src/composables/api/conversations/useMessagesQuery').useMessageQuery
   const useMessagesQuery: typeof import('./src/composables/api/conversations/useMessagesQuery').useMessagesQuery
+  const useMockDevices: typeof import('./src/modules/devices/composables/useMockDevices').useMockDevices
   const useModel: typeof import('vue').useModel
   const useMounted: typeof import('@vueuse/core').useMounted
   const useMouse: typeof import('@vueuse/core').useMouse
   const useMouseInElement: typeof import('@vueuse/core').useMouseInElement
   const useMousePressed: typeof import('@vueuse/core').useMousePressed
   const useMutationObserver: typeof import('@vueuse/core').useMutationObserver
+  const useNativeUpdateQuery: typeof import('./src/modules/updates-bundles/index').useNativeUpdateQuery
+  const useNativeUpdatesQuery: typeof import('./src/modules/updates-bundles/index').useNativeUpdatesQuery
   const useNavigatorLanguage: typeof import('@vueuse/core').useNavigatorLanguage
   const useNetwork: typeof import('@vueuse/core').useNetwork
   const useNow: typeof import('@vueuse/core').useNow
   const useObjectUrl: typeof import('@vueuse/core').useObjectUrl
   const useOffsetPagination: typeof import('@vueuse/core').useOffsetPagination
+  const useOnboardingStore: typeof import('./src/modules/onboarding/stores/onboarding.store').useOnboardingStore
   const useOnline: typeof import('@vueuse/core').useOnline
   const useOrderQuery: typeof import('./src/composables/api/orders/useOrdersQuery').useOrderQuery
   const useOrdersQuery: typeof import('./src/composables/api/orders/useOrdersQuery').useOrdersQuery
@@ -519,10 +565,15 @@ declare global {
   const useToast: typeof import('./src/composables/useToast').useToast
   const useToggle: typeof import('@vueuse/core').useToggle
   const useTransition: typeof import('@vueuse/core').useTransition
+  const useUpdateBundleMutation: typeof import('./src/modules/updates-bundles/index').useUpdateBundleMutation
   const useUpdateConversationMutation: typeof import('./src/composables/api/conversations/useConversationsQuery').useUpdateConversationMutation
+  const useUpdateDeviceChannelMutation: typeof import('./src/modules/devices/index').useUpdateDeviceChannelMutation
   const useUpdateMessageMutation: typeof import('./src/composables/api/conversations/useMessagesQuery').useUpdateMessageMutation
+  const useUpdateNativeUpdateMutation: typeof import('./src/modules/updates-bundles/index').useUpdateNativeUpdateMutation
   const useUpdateOrderMutation: typeof import('./src/composables/api/orders/useOrdersQuery').useUpdateOrderMutation
   const useUpdateProductMutation: typeof import('./src/composables/api/products/useProductsQuery').useUpdateProductMutation
+  const useUpdatesBundlesQuery: typeof import('./src/modules/updates-bundles/index').useUpdatesBundlesQuery
+  const useUpdatesBundlesStore: typeof import('./src/modules/updates-bundles/stores/updates-bundles.store').useUpdatesBundlesStore
   const useUrlSearchParams: typeof import('@vueuse/core').useUrlSearchParams
   const useUserMedia: typeof import('@vueuse/core').useUserMedia
   const useVModel: typeof import('@vueuse/core').useVModel
@@ -573,7 +624,7 @@ declare global {
   export type { Order, OrderItem } from './src/types/order.types'
   import('./src/types/order.types')
   // @ts-ignore
-  export type { ProductCreate } from './src/types/product.types'
+  export type { Product, ProductCreate } from './src/types/product.types'
   import('./src/types/product.types')
   // @ts-ignore
   export type { QueryError } from './src/composables/api/error/query-error-handler'
@@ -582,11 +633,17 @@ declare global {
   export type { LanguageItem, AvailableLang, Languages } from './src/stores/global/language.stores'
   import('./src/stores/global/language.stores')
   // @ts-ignore
+  export type { DataTableFilterOption, DataTableFilterDef, DataTableProps } from './src/components/common/DataTable/types'
+  import('./src/components/common/DataTable/types')
+  // @ts-ignore
   export type { BadgeVariants } from './src/components/ui/badge/index'
   import('./src/components/ui/badge/index')
   // @ts-ignore
   export type { ButtonVariants } from './src/components/ui/button/index'
   import('./src/components/ui/button/index')
+  // @ts-ignore
+  export type { Data, Direction, ChartConfig, ChartStyle } from './src/components/ui/chart/interface'
+  import('./src/components/ui/chart/interface')
   // @ts-ignore
   export type { EmptyMediaVariants } from './src/components/ui/empty/index'
   import('./src/components/ui/empty/index')
@@ -600,14 +657,26 @@ declare global {
   export type { SidebarProps, SidebarMenuButtonVariants } from './src/components/ui/sidebar/index'
   import('./src/components/ui/sidebar/index')
   // @ts-ignore
-  export type { DataTableConfig } from './src/modules/products/composables/useDataTable'
-  import('./src/modules/products/composables/useDataTable')
+  export type { Channel } from './src/modules/channels/types/channels.types'
+  import('./src/modules/channels/types/channels.types')
   // @ts-ignore
-  export type { TableConfig } from './src/modules/products/config/table.config'
-  import('./src/modules/products/config/table.config')
+  export type { Device } from './src/modules/devices/types/devices.types'
+  import('./src/modules/devices/types/devices.types')
   // @ts-ignore
-  export type { Product, BulkEditData } from './src/modules/products/types/products.types'
-  import('./src/modules/products/types/products.types')
+  export type { InviteMember } from './src/modules/onboarding/stores/onboarding.store'
+  import('./src/modules/onboarding/stores/onboarding.store')
+  // @ts-ignore
+  export type { DashboardStats, StatsDataPoint, DashboardStatsData } from './src/modules/statistics/types/statistics.types'
+  import('./src/modules/statistics/types/statistics.types')
+  // @ts-ignore
+  export type { DataTableConfig } from './src/modules/updates-bundles/composables/useUpdatesBundlesDataTable'
+  import('./src/modules/updates-bundles/composables/useUpdatesBundlesDataTable')
+  // @ts-ignore
+  export type { TableConfig } from './src/modules/updates-bundles/config/updatesbundlesetable.config'
+  import('./src/modules/updates-bundles/config/updatesbundlesetable.config')
+  // @ts-ignore
+  export type { Bundle, NativeUpdate, UpdateOrBundle, BulkEditData } from './src/modules/updates-bundles/types/updates-bundles.types'
+  import('./src/modules/updates-bundles/types/updates-bundles.types')
 }
 
 // for vue template auto import
@@ -647,6 +716,13 @@ declare module 'vue' {
     readonly CardFooter: UnwrapRef<typeof import('./src/components/ui/card/index')['CardFooter']>
     readonly CardHeader: UnwrapRef<typeof import('./src/components/ui/card/index')['CardHeader']>
     readonly CardTitle: UnwrapRef<typeof import('./src/components/ui/card/index')['CardTitle']>
+    readonly ChannelDistributionChart: UnwrapRef<typeof import('./src/modules/statistics/components/index')['ChannelDistributionChart']>
+    readonly ChannelsTable: UnwrapRef<typeof import('./src/modules/channels/index')['ChannelsTable']>
+    readonly ChartContainer: UnwrapRef<typeof import('./src/components/ui/chart/index')['ChartContainer']>
+    readonly ChartCrosshair: UnwrapRef<typeof import('./src/components/ui/chart/index')['ChartCrosshair']>
+    readonly ChartLegendContent: UnwrapRef<typeof import('./src/components/ui/chart/index')['ChartLegendContent']>
+    readonly ChartTooltip: UnwrapRef<typeof import('./src/components/ui/chart/index')['ChartTooltip']>
+    readonly ChartTooltipContent: UnwrapRef<typeof import('./src/components/ui/chart/index')['ChartTooltipContent']>
     readonly Checkbox: UnwrapRef<typeof import('./src/components/ui/checkbox/index')['Checkbox']>
     readonly Collapsible: UnwrapRef<typeof import('./src/components/ui/collapsible/index')['Collapsible']>
     readonly CollapsibleContent: UnwrapRef<typeof import('./src/components/ui/collapsible/index')['CollapsibleContent']>
@@ -661,7 +737,10 @@ declare module 'vue' {
     readonly CommandSeparator: UnwrapRef<typeof import('./src/components/ui/command/index')['CommandSeparator']>
     readonly CommandShortcut: UnwrapRef<typeof import('./src/components/ui/command/index')['CommandShortcut']>
     readonly DEFAULT_DELIVERY_PRICES: UnwrapRef<typeof import('./src/utils/constants')['DEFAULT_DELIVERY_PRICES']>
+    readonly DataTable: UnwrapRef<typeof import('./src/components/common/DataTable/index')['DataTable']>
     readonly DatePickerRange: UnwrapRef<typeof import('./src/components/ui/date-picker/index')['DatePickerRange']>
+    readonly DeviceDistributionChart: UnwrapRef<typeof import('./src/modules/statistics/components/index')['DeviceDistributionChart']>
+    readonly DevicesTable: UnwrapRef<typeof import('./src/modules/devices/index')['DevicesTable']>
     readonly Dialog: UnwrapRef<typeof import('./src/components/ui/dialog/index')['Dialog']>
     readonly DialogClose: UnwrapRef<typeof import('./src/components/ui/dialog/index')['DialogClose']>
     readonly DialogContent: UnwrapRef<typeof import('./src/components/ui/dialog/index')['DialogContent']>
@@ -759,6 +838,7 @@ declare module 'vue' {
     readonly SidebarTrigger: UnwrapRef<typeof import('./src/components/ui/sidebar/index')['SidebarTrigger']>
     readonly Skeleton: UnwrapRef<typeof import('./src/components/ui/skeleton/index')['Skeleton']>
     readonly Switch: UnwrapRef<typeof import('./src/components/ui/switch/index')['Switch']>
+    readonly THEMES: UnwrapRef<typeof import('./src/components/ui/chart/index')['THEMES']>
     readonly Table: UnwrapRef<typeof import('./src/components/ui/table/index')['Table']>
     readonly TableBody: UnwrapRef<typeof import('./src/components/ui/table/index')['TableBody']>
     readonly TableCaption: UnwrapRef<typeof import('./src/components/ui/table/index')['TableCaption']>
@@ -779,6 +859,9 @@ declare module 'vue' {
     readonly TooltipContent: UnwrapRef<typeof import('./src/components/ui/tooltip/index')['TooltipContent']>
     readonly TooltipProvider: UnwrapRef<typeof import('./src/components/ui/tooltip/index')['TooltipProvider']>
     readonly TooltipTrigger: UnwrapRef<typeof import('./src/components/ui/tooltip/index')['TooltipTrigger']>
+    readonly UpdateDownloadsChart: UnwrapRef<typeof import('./src/modules/statistics/components/index')['UpdateDownloadsChart']>
+    readonly UpdatesBundlesHeader: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['UpdatesBundlesHeader']>
+    readonly UpdatesBundlesTable: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['UpdatesBundlesTable']>
     readonly VueQueryPlugin: UnwrapRef<typeof import('./src/composables/api/index')['VueQueryPlugin']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly apiClient: UnwrapRef<typeof import('./src/services/api.client')['apiClient']>
@@ -787,9 +870,11 @@ declare module 'vue' {
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly badgeVariants: UnwrapRef<typeof import('./src/components/ui/badge/index')['badgeVariants']>
     readonly buttonVariants: UnwrapRef<typeof import('./src/components/ui/button/index')['buttonVariants']>
+    readonly channelsColumns: UnwrapRef<typeof import('./src/modules/channels/components/ChannelsTable/channels.columns')['channelsColumns']>
+    readonly chartVariants: UnwrapRef<typeof import('./src/components/ui/chart/chart-config')['chartVariants']>
     readonly clearTableState: UnwrapRef<typeof import('./src/utils/tables.utils')['clearTableState']>
     readonly cn: UnwrapRef<typeof import('./src/lib/utils')['cn']>
-    readonly columns: UnwrapRef<typeof import('./src/modules/products/components/ProductsTable/products.columns')['columns']>
+    readonly componentToString: UnwrapRef<typeof import('./src/components/ui/chart/utils')['componentToString']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -819,6 +904,7 @@ declare module 'vue' {
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
+    readonly devicesColumns: UnwrapRef<typeof import('./src/modules/devices/components/DevicesTable/devices.columns')['devicesColumns']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly emptyMediaVariants: UnwrapRef<typeof import('./src/components/ui/empty/index')['emptyMediaVariants']>
@@ -885,9 +971,9 @@ declare module 'vue' {
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly percentage: UnwrapRef<typeof import('./src/utils/tables.utils')['percentage']>
     readonly pluralize: UnwrapRef<typeof import('./src/utils/tables.utils')['pluralize']>
-    readonly products: UnwrapRef<typeof import('./src/modules/products/stores/fake/products.fakes')['products']>
     readonly productsService: UnwrapRef<typeof import('./src/services/products.service')['productsService']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
+    readonly provideChartContext: UnwrapRef<typeof import('./src/components/ui/chart/index')['provideChartContext']>
     readonly provideCommandContext: UnwrapRef<typeof import('./src/components/ui/command/index')['provideCommandContext']>
     readonly provideCommandGroupContext: UnwrapRef<typeof import('./src/components/ui/command/index')['provideCommandGroupContext']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
@@ -921,7 +1007,6 @@ declare module 'vue' {
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
-    readonly tableConfig: UnwrapRef<typeof import('./src/modules/products/config/table.config')['tableConfig']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
@@ -940,8 +1025,12 @@ declare module 'vue' {
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
+    readonly updatesBundlesColumns: UnwrapRef<typeof import('./src/modules/updates-bundles/components/UpdatesBundlesTable/updates-bundles.columns')['updatesBundlesColumns']>
+    readonly updatesBundlesTableConfig: UnwrapRef<typeof import('./src/modules/updates-bundles/config/updatesbundlesetable.config')['updatesBundlesTableConfig']>
+    readonly usUpdatesBundleseDataTable: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesDataTable')['usUpdatesBundleseDataTable']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
+    readonly useApiFormDataMutation: UnwrapRef<typeof import('./src/composables/api/config/useApiFormDataMutation')['useApiFormDataMutation']>
     readonly useApiMutation: UnwrapRef<typeof import('./src/composables/api/config/useApiQuery')['useApiMutation']>
     readonly useApiQuery: UnwrapRef<typeof import('./src/composables/api/config/useApiQuery')['useApiQuery']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
@@ -967,7 +1056,12 @@ declare module 'vue' {
     readonly useBreakpoints: UnwrapRef<typeof import('@vueuse/core')['useBreakpoints']>
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
+    readonly useBundleQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useBundleQuery']>
+    readonly useBundlesQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useBundlesQuery']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
+    readonly useChannelsQuery: UnwrapRef<typeof import('./src/modules/channels/index')['useChannelsQuery']>
+    readonly useChannelsStore: UnwrapRef<typeof import('./src/modules/channels/stores/channels.store')['useChannelsStore']>
+    readonly useChart: UnwrapRef<typeof import('./src/components/ui/chart/index')['useChart']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
@@ -980,7 +1074,11 @@ declare module 'vue' {
     readonly useCountdown: UnwrapRef<typeof import('@vueuse/core')['useCountdown']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
     readonly useCounterStore: UnwrapRef<typeof import('./src/stores/counter')['useCounterStore']>
+    readonly useCreateBundleFormDataMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateBundleFormDataMutation']>
+    readonly useCreateBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useCreateBundleMutation']>
     readonly useCreateConversationMutation: UnwrapRef<typeof import('./src/composables/api/conversations/useConversationsQuery')['useCreateConversationMutation']>
+    readonly useCreateNativeUpdateFormDataMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateNativeUpdateFormDataMutation']>
+    readonly useCreateNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useCreateNativeUpdateMutation']>
     readonly useCreateOrderMutation: UnwrapRef<typeof import('./src/composables/api/orders/useOrdersQuery')['useCreateOrderMutation']>
     readonly useCreateProductMutation: UnwrapRef<typeof import('./src/composables/api/products/useProductsQuery')['useCreateProductMutation']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
@@ -989,19 +1087,28 @@ declare module 'vue' {
     readonly useCurrentElement: UnwrapRef<typeof import('@vueuse/core')['useCurrentElement']>
     readonly useCycleList: UnwrapRef<typeof import('@vueuse/core')['useCycleList']>
     readonly useDark: UnwrapRef<typeof import('@vueuse/core')['useDark']>
-    readonly useDataTable: UnwrapRef<typeof import('./src/modules/products/composables/useDataTable')['useDataTable']>
+    readonly useDashboardStatsDataQuery: UnwrapRef<typeof import('./src/modules/statistics/index')['useDashboardStatsDataQuery']>
+    readonly useDashboardStatsQuery: UnwrapRef<typeof import('./src/modules/statistics/index')['useDashboardStatsQuery']>
+    readonly useDataTable: UnwrapRef<typeof import('./src/components/common/DataTable/useDataTable')['useDataTable']>
     readonly useDateFormat: UnwrapRef<typeof import('@vueuse/core')['useDateFormat']>
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
     readonly useDebouncedRefHistory: UnwrapRef<typeof import('@vueuse/core')['useDebouncedRefHistory']>
+    readonly useDeleteBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useDeleteBundleMutation']>
+    readonly useDeleteChannelMutation: UnwrapRef<typeof import('./src/modules/channels/index')['useDeleteChannelMutation']>
     readonly useDeleteConversationMutation: UnwrapRef<typeof import('./src/composables/api/conversations/useConversationsQuery')['useDeleteConversationMutation']>
+    readonly useDeleteDeviceMutation: UnwrapRef<typeof import('./src/modules/devices/index')['useDeleteDeviceMutation']>
     readonly useDeleteMessageMutation: UnwrapRef<typeof import('./src/composables/api/conversations/useMessagesQuery')['useDeleteMessageMutation']>
+    readonly useDeleteNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useDeleteNativeUpdateMutation']>
     readonly useDeleteOrderMutation: UnwrapRef<typeof import('./src/composables/api/orders/useOrdersQuery')['useDeleteOrderMutation']>
     readonly useDeleteProductMutation: UnwrapRef<typeof import('./src/composables/api/products/useProductsQuery')['useDeleteProductMutation']>
     readonly useDeviceMotion: UnwrapRef<typeof import('@vueuse/core')['useDeviceMotion']>
     readonly useDeviceOrientation: UnwrapRef<typeof import('@vueuse/core')['useDeviceOrientation']>
     readonly useDevicePixelRatio: UnwrapRef<typeof import('@vueuse/core')['useDevicePixelRatio']>
+    readonly useDevicesDataTable: UnwrapRef<typeof import('./src/modules/devices/composables/useDevicesDataTable')['useDevicesDataTable']>
     readonly useDevicesList: UnwrapRef<typeof import('@vueuse/core')['useDevicesList']>
+    readonly useDevicesQuery: UnwrapRef<typeof import('./src/modules/devices/index')['useDevicesQuery']>
+    readonly useDevicesStore: UnwrapRef<typeof import('./src/modules/devices/stores/devices.store')['useDevicesStore']>
     readonly useDisplayMedia: UnwrapRef<typeof import('@vueuse/core')['useDisplayMedia']>
     readonly useDocumentVisibility: UnwrapRef<typeof import('@vueuse/core')['useDocumentVisibility']>
     readonly useDraggable: UnwrapRef<typeof import('@vueuse/core')['useDraggable']>
@@ -1024,6 +1131,7 @@ declare module 'vue' {
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>
     readonly useFullscreen: UnwrapRef<typeof import('@vueuse/core')['useFullscreen']>
     readonly useGamepad: UnwrapRef<typeof import('@vueuse/core')['useGamepad']>
+    readonly useGenerateClusteredDevices: UnwrapRef<typeof import('./src/modules/devices/composables/useGenerateDevices')['useGenerateClusteredDevices']>
     readonly useGeolocation: UnwrapRef<typeof import('@vueuse/core')['useGeolocation']>
     readonly useI18n: UnwrapRef<typeof import('vue-i18n')['useI18n']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
@@ -1047,17 +1155,21 @@ declare module 'vue' {
     readonly useMemory: UnwrapRef<typeof import('@vueuse/core')['useMemory']>
     readonly useMessageQuery: UnwrapRef<typeof import('./src/composables/api/conversations/useMessagesQuery')['useMessageQuery']>
     readonly useMessagesQuery: UnwrapRef<typeof import('./src/composables/api/conversations/useMessagesQuery')['useMessagesQuery']>
+    readonly useMockDevices: UnwrapRef<typeof import('./src/modules/devices/composables/useMockDevices')['useMockDevices']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useMounted: UnwrapRef<typeof import('@vueuse/core')['useMounted']>
     readonly useMouse: UnwrapRef<typeof import('@vueuse/core')['useMouse']>
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
     readonly useMousePressed: UnwrapRef<typeof import('@vueuse/core')['useMousePressed']>
     readonly useMutationObserver: UnwrapRef<typeof import('@vueuse/core')['useMutationObserver']>
+    readonly useNativeUpdateQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useNativeUpdateQuery']>
+    readonly useNativeUpdatesQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useNativeUpdatesQuery']>
     readonly useNavigatorLanguage: UnwrapRef<typeof import('@vueuse/core')['useNavigatorLanguage']>
     readonly useNetwork: UnwrapRef<typeof import('@vueuse/core')['useNetwork']>
     readonly useNow: UnwrapRef<typeof import('@vueuse/core')['useNow']>
     readonly useObjectUrl: UnwrapRef<typeof import('@vueuse/core')['useObjectUrl']>
     readonly useOffsetPagination: UnwrapRef<typeof import('@vueuse/core')['useOffsetPagination']>
+    readonly useOnboardingStore: UnwrapRef<typeof import('./src/modules/onboarding/stores/onboarding.store')['useOnboardingStore']>
     readonly useOnline: UnwrapRef<typeof import('@vueuse/core')['useOnline']>
     readonly useOrderQuery: UnwrapRef<typeof import('./src/composables/api/orders/useOrdersQuery')['useOrderQuery']>
     readonly useOrdersQuery: UnwrapRef<typeof import('./src/composables/api/orders/useOrdersQuery')['useOrdersQuery']>
@@ -1079,7 +1191,6 @@ declare module 'vue' {
     readonly useProductQuery: UnwrapRef<typeof import('./src/composables/api/products/useProductsQuery')['useProductQuery']>
     readonly useProductsQuery: UnwrapRef<typeof import('./src/composables/api/products/useProductsQuery')['useProductsQuery']>
     readonly useProductsStore: UnwrapRef<typeof import('./src/stores/products.store')['useProductsStore']>
-    readonly useProductsTable: UnwrapRef<typeof import('./src/modules/products/composables/useProductsTable')['useProductsTable']>
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
     readonly useRegisterMutation: UnwrapRef<typeof import('./src/composables/api/auth/useAuthQuery')['useRegisterMutation']>
@@ -1106,7 +1217,6 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
-    readonly useTableSelection: UnwrapRef<typeof import('./src/modules/products/quick_reference.md')['useTableSelection']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
@@ -1127,10 +1237,15 @@ declare module 'vue' {
     readonly useToast: UnwrapRef<typeof import('./src/composables/useToast')['useToast']>
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
+    readonly useUpdateBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useUpdateBundleMutation']>
     readonly useUpdateConversationMutation: UnwrapRef<typeof import('./src/composables/api/conversations/useConversationsQuery')['useUpdateConversationMutation']>
+    readonly useUpdateDeviceChannelMutation: UnwrapRef<typeof import('./src/modules/devices/index')['useUpdateDeviceChannelMutation']>
     readonly useUpdateMessageMutation: UnwrapRef<typeof import('./src/composables/api/conversations/useMessagesQuery')['useUpdateMessageMutation']>
+    readonly useUpdateNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useUpdateNativeUpdateMutation']>
     readonly useUpdateOrderMutation: UnwrapRef<typeof import('./src/composables/api/orders/useOrdersQuery')['useUpdateOrderMutation']>
     readonly useUpdateProductMutation: UnwrapRef<typeof import('./src/composables/api/products/useProductsQuery')['useUpdateProductMutation']>
+    readonly useUpdatesBundlesQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/index')['useUpdatesBundlesQuery']>
+    readonly useUpdatesBundlesStore: UnwrapRef<typeof import('./src/modules/updates-bundles/stores/updates-bundles.store')['useUpdatesBundlesStore']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>

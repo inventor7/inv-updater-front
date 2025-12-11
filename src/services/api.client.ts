@@ -1,5 +1,6 @@
 import type { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import axios from 'axios'
+import { authService } from './auth.service'
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api'
 
@@ -10,9 +11,6 @@ class ApiClient {
     this.client = axios.create({
       baseURL: API_BASE_URL,
       timeout: 30000,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
 
     this.setupInterceptors()
@@ -26,6 +24,13 @@ class ApiClient {
         if (accessToken) {
           config.headers.Authorization = `Bearer ${accessToken}`
         }
+
+        // Set Content-Type to application/json only if data is not FormData
+        // FormData requests should have their Content-Type set automatically by the browser
+        if (!(config.data instanceof FormData)) {
+          config.headers['Content-Type'] = 'application/json'
+        }
+
         return config
       },
       (error) => Promise.reject(error),

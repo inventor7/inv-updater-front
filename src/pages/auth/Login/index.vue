@@ -8,8 +8,8 @@
     <!-- 🔹 Left content (only visible on large screens) -->
     <div class="relative hidden h-full flex-col text-white dark:border-r lg:flex z-10 p-10">
       <div class="relative z-20 flex items-center text-2xl font-semibold">
-        <img :src="jawebliLogo" class="aspect-square size-10 mr-2" alt="Jawebli Logo" />
-        Jawebli Inc
+        <img :src="capgoLogo" class="aspect-square size-10 mr-2" alt="capgo Logo" />
+        capgo Inc
       </div>
 
       <div class="relative z-20 mt-auto">
@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import jawebliLogo from '@/assets/images/jawebli.png'
+import capgoLogo from '@/assets/images/capgo.webp'
 import { toast } from 'vue-sonner'
 
 const email = ref('')
@@ -133,7 +133,7 @@ const login = async () => {
 definePage({
   meta: {
     title: 'Login',
-    description: 'Log in to your Jawebli account',
+    description: 'Log in to your capgo account',
     category: 'authentication',
     hideFromSearch: true,
     requiresAuth: false,

@@ -41,7 +41,7 @@
             <DropdownMenuShortcut>⌘{{ index + 1 }}</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem class="gap-2 p-2">
+          <DropdownMenuItem class="gap-2 p-2" @click="router.push('/onboarding/')">
             <div class="flex size-6 items-center justify-center rounded-md border bg-background">
               <ILucidePlus class="size-4" />
             </div>
@@ -54,6 +54,7 @@
 </template>
 <script setup lang="ts">
 import type { Component } from 'vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps<{
   stores: {
@@ -63,6 +64,7 @@ const props = defineProps<{
   }[]
 }>()
 
+const router = useRouter()
 const { isMobile } = useSidebar()
 const activeTeam = ref(props.stores[0])
 </script>
