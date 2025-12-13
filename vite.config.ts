@@ -76,19 +76,19 @@ export default defineConfig({
       autoInstall: true,
       defaultClass: 'icon-global',
     }),
-    Imagemin({
-      cache: true,
-      compress: {
-        jpg: { quality: 80, progressive: true },
-        jpeg: { quality: 80, progressive: true },
-        png: { quality: 0.8 },
-        webp: { quality: 80 },
-      },
-      conversion: [
-        { from: 'png', to: 'webp' },
-        { from: 'jpg', to: 'webp' },
-      ],
-    }),
+    // Imagemin({
+    //   cache: false,
+    //   compress: {
+    //     jpg: { quality: 80, progressive: true },
+    //     jpeg: { quality: 80, progressive: true },
+    //     png: { quality: 0.8 },
+    //     webp: { quality: 80 },
+    //   },
+    //   conversion: [
+    //     { from: 'png', to: 'webp' },
+    //     { from: 'jpg', to: 'webp' },
+    //   ],
+    // }),
   ],
   resolve: {
     alias: {
