@@ -79,11 +79,6 @@
 
 <script setup lang="ts">
 import { Package, Smartphone, Download, TrendingUp } from 'lucide-vue-next'
-import {
-  UpdateDownloadsChart,
-  DeviceDistributionChart,
-  ChannelDistributionChart,
-} from '@/modules/statistics'
 
 definePage({
   meta: {

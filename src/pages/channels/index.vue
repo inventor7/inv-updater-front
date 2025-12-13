@@ -25,7 +25,6 @@
 </template>
 
 <script setup lang="ts">
-import { ChannelsTable, useChannelsQuery, useDeleteChannelMutation } from '@/modules/channels'
 import { toast } from 'vue-sonner'
 
 definePage({

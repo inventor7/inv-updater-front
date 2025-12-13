@@ -50,12 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import {
-  DevicesTable,
-  useDevicesQuery,
-  useDeleteDeviceMutation,
-  useUpdateDeviceChannelMutation,
-} from '@/modules/devices'
 import DevicesMap from '@/modules/devices/components/DevicesMap.vue'
 import { toast } from 'vue-sonner'
 import { ref } from 'vue'

@@ -220,22 +220,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import { Package, Smartphone, Download, Radio, Upload, Activity } from 'lucide-vue-next'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import {
-  UpdateDownloadsChart,
-  DeviceDistributionChart,
-  ChannelDistributionChart,
-} from '@/modules/statistics'
 
 const { data: statsData, isLoading: isLoadingStats, error: statsError } = useDashboardStatsQuery()
-// const { data: statsDataDetailed, isLoading: isLoadingDetailedStats } = useDashboardStatsDataQuery()
 
-// Mock recent activity data
 const recentActivity = ref([
   {
     title: 'New bundle uploaded',

@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useTransition, TransitionPresets, useIntersectionObserver } from '@vueuse/core'
-import AnimatedUnderline from './AnimatedUnderline.vue'
 
 const statsRef = ref(null)
 const isVisible = ref(false)
 
 const { stop } = useIntersectionObserver(
   statsRef,
-  ([{ isIntersecting }]) => {
+  (isIntersecting) => {
     if (isIntersecting) {
       isVisible.value = true
       stop()
@@ -59,7 +58,7 @@ const formatNumber = (num: number, decimals = 0) => {
       <div class="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
         <div v-for="(stat, index) in stats" :key="stat.label" class="space-y-2">
           <div class="text-4xl md:text-5xl font-bold text-white tabular-nums tracking-tight">
-            <span>{{ formatNumber(counters[index].value, stat.decimals) }}</span>
+            <span>{{ formatNumber(counters?.[index]?.value ?? 0, stat.decimals) }}</span>
             <span class="text-primary">{{ stat.suffix }}</span>
           </div>
           <div

@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const terminalLines = ref([
-  { text: 'invogo deploy --target=production', type: 'command' },
+  { text: 'capucho deploy --target=production', type: 'command' },
   { text: 'Analyzing bundle...', type: 'output', delay: 500 },
   { text: 'Diffing binary...', type: 'output', delay: 1200 },
   { text: 'Optimizing assets...', type: 'output', delay: 1800 },

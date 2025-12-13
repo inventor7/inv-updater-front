@@ -33,19 +33,7 @@ const devicesTableConfig = {
   },
 }
 
-export interface DataTableConfig {
-  enableSorting?: boolean
-  enableFiltering?: boolean
-  enableGrouping?: boolean
-  enableAggregating?: boolean
-  enablePinning?: boolean
-  enableColumnOrdering?: boolean
-  enableRowSelection?: boolean
-  enablePagination?: boolean
-  enableVirtualization?: boolean
-}
-
-export const useDevicesDataTable = (config: DataTableConfig = {}) => {
+export const useDevicesDataTable = (config: DataTableConfig = devicesTableConfig) => {
   // Core state
   const sorting = ref<SortingState>([])
   const columnFilters = ref<ColumnFiltersState>([])

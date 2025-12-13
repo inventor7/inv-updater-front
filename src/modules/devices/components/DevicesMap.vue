@@ -111,15 +111,10 @@ import 'leaflet/dist/leaflet.css'
 import { LMap, LTileLayer, LMarker, LPopup, LIcon } from '@vue-leaflet/vue-leaflet'
 import type { Device } from '@/modules/devices/types/devices.types'
 
-const { items, showControls } = withDefaults(
-  defineProps<{
-    items: Device[]
-    showControls?: boolean
-  }>(),
-  {
-    showControls: true,
-  },
-)
+const { items, showControls } = defineProps<{
+  items: Device[]
+  showControls?: boolean
+}>()
 
 const router = useRouter()
 const zoom = ref(5)

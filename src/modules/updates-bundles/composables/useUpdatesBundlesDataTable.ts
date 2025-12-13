@@ -15,7 +15,7 @@ import type {
 import { ref, type Ref } from 'vue'
 import { updatesBundlesTableConfig } from '../config/updatesbundlesetable.config'
 
-export interface DataTableConfig {
+export interface UpdatesBundlesDataTableConfig {
   enableSorting?: boolean
   enableFiltering?: boolean
   enableGrouping?: boolean
@@ -27,7 +27,7 @@ export interface DataTableConfig {
   enableVirtualization?: boolean
 }
 
-export const usUpdatesBundleseDataTable = <TData>(config: DataTableConfig = {}) => {
+export const usUpdatesBundleseDataTable = <TData>(config: UpdatesBundlesDataTableConfig = {}) => {
   // Core state
   const sorting = ref<SortingState>([])
   const columnFilters = ref<ColumnFiltersState>([])

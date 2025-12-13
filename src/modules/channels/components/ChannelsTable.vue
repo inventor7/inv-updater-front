@@ -28,15 +28,8 @@
 <script setup lang="ts">
 import { channelsColumns } from './ChannelsTable/channels.columns'
 import ChannelsDeleteDialog from './ChannelsTable/ChannelsDeleteDialog.vue'
-import {
-  DataTable,
-  type DataTableConfig,
-  type DataTableFilterDef,
-} from '@/components/common/DataTable'
 import type { Channel } from '../types/channels.types'
 import { Plus } from 'lucide-vue-next'
-import { computed, ref } from 'vue'
-import { Button } from '@/components/ui/button'
 
 const { items } = defineProps<{
   items: Channel[]
