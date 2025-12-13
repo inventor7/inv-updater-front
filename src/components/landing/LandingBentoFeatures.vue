@@ -16,7 +16,7 @@ const FeatureCard = defineComponent({
   props: {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    icon: { type: Object as PropType<Component>, required: true },
+    icon: { type: [Object, Function] as PropType<Component>, required: true },
     className: { type: String, default: '' },
     index: { type: Number, default: 0 },
   },

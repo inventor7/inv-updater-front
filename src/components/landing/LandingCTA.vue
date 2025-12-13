@@ -130,7 +130,6 @@ const startAnimation = () => {
             })
             isInteractive.value = true
             scrollToBottom()
-            nextTick(() => focusInput())
           }, 1000)
         }
       },

@@ -146,7 +146,7 @@
 </template>
 
 <script setup lang="ts">
-import capgoLogo from '@/assets/images/capgo.webp'
+import capgoLogo from '@/assets/images/capucho.png'
 const router = useRouter()
 const pillars = [92, 84, 78, 70, 62, 54, 46, 34, 18, 34, 46, 54, 62, 70, 78, 84, 92]
 const isMounted = ref(false)

@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import capgoLogo from '@/assets/images/capgo.webp'
+import capgoLogo from '@/assets/images/capucho.png'
 import { toast } from 'vue-sonner'
 
 const email = ref('')
