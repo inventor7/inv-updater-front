@@ -221,7 +221,7 @@ onMounted(() => {
                   <div class="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
                 </div>
                 <div class="flex-1 text-center text-xs text-stone-500 font-mono">
-                  invogo-cli — zsh
+                  capucho-cli — zsh
                 </div>
               </div>
 

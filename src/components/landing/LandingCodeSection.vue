@@ -9,7 +9,7 @@ const steps = [
 ]
 
 const terminalLines = [
-  { type: 'command', text: 'invogo deploy' },
+  { type: 'command', text: 'capucho deploy' },
   { type: 'output', text: 'Building bundle...', time: '420ms' },
   { type: 'output', text: 'Optimizing assets...', time: '120ms' },
   { type: 'output', text: 'Signing package...', time: '85ms' },
@@ -90,7 +90,7 @@ const terminalLines = [
             <!-- Command -->
             <div class="flex gap-2">
               <span class="text-primary font-bold">➜</span>
-              <span class="text-stone-100">invogo deploy</span>
+              <span class="text-stone-100">capucho deploy</span>
             </div>
 
             <!-- Output -->
