@@ -1,12 +1,5 @@
 <template>
   <div class="space-y-4">
-    <div class="flex items-center justify-end w-full">
-      <Button @click="createNewChannel">
-        <Plus class="mr-2 h-4 w-4" />
-        Create Channel
-      </Button>
-    </div>
-
     <DataTable
       :columns="channelsColumns"
       :data="items"
@@ -29,7 +22,6 @@
 import { channelsColumns } from './ChannelsTable/channels.columns'
 import ChannelsDeleteDialog from './ChannelsTable/ChannelsDeleteDialog.vue'
 import type { Channel } from '../types/channels.types'
-import { Plus } from 'lucide-vue-next'
 
 const { items } = defineProps<{
   items: Channel[]
@@ -37,7 +29,6 @@ const { items } = defineProps<{
 
 const emit = defineEmits<{
   (e: 'deleteItem', id: string): void
-  (e: 'createItem'): void
 }>()
 
 const selectedItems = ref<Channel[]>([])
@@ -95,9 +86,5 @@ const router = useRouter()
 
 const handleRowClick = (item: Channel) => {
   router.push(`/channels/${item.id}`)
-}
-
-const createNewChannel = () => {
-  emit('createItem')
 }
 </script>

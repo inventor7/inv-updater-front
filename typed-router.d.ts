@@ -100,6 +100,13 @@ declare module 'vue-router/auto-routes' {
       { id: ParamValue<false> },
       | never
     >,
+    '/channels/create': RouteRecordInfo<
+      '/channels/create',
+      '/channels/create',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
     '/dashboard/': RouteRecordInfo<
       '/dashboard/',
       '/dashboard',
@@ -246,6 +253,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/channels/[id].vue': {
       routes:
         | '/channels/[id]'
+      views:
+        | never
+    }
+    'src/pages/channels/create.vue': {
+      routes:
+        | '/channels/create'
       views:
         | never
     }

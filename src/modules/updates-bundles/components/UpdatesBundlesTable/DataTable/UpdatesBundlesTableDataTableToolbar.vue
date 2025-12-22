@@ -39,13 +39,6 @@
           :options="platformOptions"
         />
 
-        <UpdatesBundlesTableDataTableFacetedFilter
-          v-if="table.getColumn('environment')"
-          :column="table.getColumn('environment')!"
-          title="Environment"
-          :options="environmentOptions"
-        />
-
         <Button
           v-if="isFiltered"
           variant="ghost"
@@ -200,21 +193,6 @@ const platformOptions = computed(() => {
     value: value,
     count,
     icon: value === 'android' ? StreamlineLogosAndroidLogoBlock : StreamlineLogosAppleLogoBlock,
-  }))
-})
-
-// Environment options (with counts from faceting)
-const environmentOptions = computed(() => {
-  const facets = props.table.getColumn('environment')?.getFacetedUniqueValues()
-  const envLabels: Record<string, string> = {
-    prod: 'Production',
-    staging: 'Staging',
-    dev: 'Development',
-  }
-  return Array.from(facets?.entries() || []).map(([value, count]) => ({
-    label: envLabels[value] || value,
-    value: value,
-    count,
   }))
 })
 

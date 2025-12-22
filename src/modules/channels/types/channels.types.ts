@@ -1,10 +1,19 @@
 export interface Channel {
   id: string
-  name: string // The channel identifier (e.g., 'production', 'beta')
-  app_id?: string
-  platform?: 'android' | 'ios' | 'web'
-  created_at?: string
-  updated_at?: string
-  bundle_count?: number // Optional count of bundles in this channel
-  device_count?: number // Optional count of devices assigned to this channel
+  name: string
+  app_id: string
+  is_public: boolean
+  allow_device_self_set: boolean
+  allow_dev: boolean
+  allow_emulator: boolean
+  ios_enabled: boolean
+  android_enabled: boolean
+  disable_auto_update: 'none' | 'major' | 'minor' | 'patch'
+  disable_auto_update_under_native: boolean
+  current_version_id?: string
+  current_version?: string
+  created_at: string
+  updated_at: string
+  bundle_count?: number
+  device_count?: number
 }

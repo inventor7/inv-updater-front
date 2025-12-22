@@ -421,6 +421,7 @@ declare global {
   const useBundleQuery: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useBundleQuery
   const useBundlesQuery: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useBundlesQuery
   const useCached: typeof import('@vueuse/core').useCached
+  const useChannelQuery: typeof import('./src/modules/channels/composables/useChannelsQuery').useChannelQuery
   const useChannelsQuery: typeof import('./src/modules/channels/composables/useChannelsQuery').useChannelsQuery
   const useChannelsStore: typeof import('./src/modules/channels/stores/channels.store').useChannelsStore
   const useChart: typeof import('./src/components/ui/chart/index').useChart
@@ -439,6 +440,7 @@ declare global {
   const useCreateAppMutation: typeof import('./src/modules/apps/composables/useAppsQuery').useCreateAppMutation
   const useCreateBundleFormDataMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useCreateBundleFormDataMutation
   const useCreateBundleMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useCreateBundleMutation
+  const useCreateChannelMutation: typeof import('./src/modules/channels/composables/useChannelsQuery').useCreateChannelMutation
   const useCreateConversationMutation: typeof import('./src/composables/api/conversations/useConversationsQuery').useCreateConversationMutation
   const useCreateNativeUpdateFormDataMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useCreateNativeUpdateFormDataMutation
   const useCreateNativeUpdateMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useCreateNativeUpdateMutation
@@ -613,6 +615,7 @@ declare global {
   const useTransition: typeof import('@vueuse/core').useTransition
   const useUpdateAppMutation: typeof import('./src/modules/apps/composables/useAppsQuery').useUpdateAppMutation
   const useUpdateBundleMutation: typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery').useUpdateBundleMutation
+  const useUpdateChannelMutation: typeof import('./src/modules/channels/composables/useChannelsQuery').useUpdateChannelMutation
   const useUpdateConversationMutation: typeof import('./src/composables/api/conversations/useConversationsQuery').useUpdateConversationMutation
   const useUpdateDeviceChannelMutation: typeof import('./src/modules/devices/composables/useDevicesQuery').useUpdateDeviceChannelMutation
   const useUpdateLogsQuery: typeof import('./src/modules/update-logs/composables/useUpdateLogsQuery').useUpdateLogsQuery
@@ -1144,6 +1147,7 @@ declare module 'vue' {
     readonly useBundleQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useBundleQuery']>
     readonly useBundlesQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useBundlesQuery']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
+    readonly useChannelQuery: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useChannelQuery']>
     readonly useChannelsQuery: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useChannelsQuery']>
     readonly useChannelsStore: UnwrapRef<typeof import('./src/modules/channels/stores/channels.store')['useChannelsStore']>
     readonly useChart: UnwrapRef<typeof import('./src/components/ui/chart/index')['useChart']>
@@ -1159,6 +1163,7 @@ declare module 'vue' {
     readonly useCreateAppMutation: UnwrapRef<typeof import('./src/modules/apps/composables/useAppsQuery')['useCreateAppMutation']>
     readonly useCreateBundleFormDataMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateBundleFormDataMutation']>
     readonly useCreateBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateBundleMutation']>
+    readonly useCreateChannelMutation: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useCreateChannelMutation']>
     readonly useCreateNativeUpdateFormDataMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateNativeUpdateFormDataMutation']>
     readonly useCreateNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateNativeUpdateMutation']>
     readonly useCreateOrganizationMutation: UnwrapRef<typeof import('./src/modules/organizations/composables/useOrganizationsQuery')['useCreateOrganizationMutation']>
@@ -1312,6 +1317,7 @@ declare module 'vue' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUpdateBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useUpdateBundleMutation']>
+    readonly useUpdateChannelMutation: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useUpdateChannelMutation']>
     readonly useUpdateDeviceChannelMutation: UnwrapRef<typeof import('./src/modules/devices/composables/useDevicesQuery')['useUpdateDeviceChannelMutation']>
     readonly useUpdateLogsQuery: UnwrapRef<typeof import('./src/modules/update-logs/composables/useUpdateLogsQuery')['useUpdateLogsQuery']>
     readonly useUpdateNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useUpdateNativeUpdateMutation']>

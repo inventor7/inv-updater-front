@@ -80,7 +80,7 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
 
   // Version Column
   {
-    accessorKey: 'version',
+    accessorKey: 'version_name',
     header: ({ column }) =>
       h(UpdatesBundlesTableDataTableColumnHeader, { column, title: 'Version' }),
     cell: ({ row }) => {
@@ -89,7 +89,7 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
         h(type === 'native' ? Smartphone : Globe, {
           class: `w-5 h-5 mr-2`,
         }),
-        h('span', { class: 'font-medium' }, row.original.version),
+        h('span', { class: 'font-medium' }, row.original.version_name),
       ])
     },
     enableSorting: true,
@@ -207,46 +207,12 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
     },
   },
 
-  // Environment Column
-  {
-    accessorKey: 'environment',
-    header: ({ column }) =>
-      h(UpdatesBundlesTableDataTableColumnHeader, { column, title: 'Environment' }),
-    cell: ({ row }) => {
-      const environment = row.original.environment
-      const variantMap: Record<string, any> = {
-        prod: 'default',
-        staging: 'secondary',
-        dev: 'outline',
-      }
-
-      return h(
-        Badge,
-        {
-          variant: variantMap[environment],
-        },
-        () => environment.charAt(0).toUpperCase() + environment.slice(1),
-      )
-    },
-    enableSorting: true,
-    enableHiding: true,
-    enableColumnFilter: true,
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
-    size: 120,
-    meta: {
-      filterVariant: 'select',
-      faceted: true,
-    },
-  },
-
   // File Size Column (for native updates only)
   {
-    accessorKey: 'file_size',
+    accessorKey: 'file_size_bytes',
     header: ({ column }) => h(UpdatesBundlesTableDataTableColumnHeader, { column, title: 'Size' }),
     cell: ({ row }) => {
-      const fileSize = row.original.file_size
+      const fileSize = row.original.file_size_bytes
       if (!fileSize) return h('div', '—')
 
       // Format file size

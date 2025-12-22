@@ -1,11 +1,6 @@
 <template>
   <div class="space-y-6">
-    <div>
-      <h1 class="text-3xl font-heading font-bold">Channels</h1>
-      <p class="text-muted-foreground">
-        Manage your deployment channels (e.g., Production, Staging, Dev).
-      </p>
-    </div>
+    <ChannelsHeader />
 
     <div v-if="isLoading" class="flex justify-center p-8">
       <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -15,12 +10,7 @@
       Failed to load channels: {{ error.message }}
     </div>
 
-    <ChannelsTable
-      v-else
-      :items="channels || []"
-      @delete-item="handleDelete"
-      @create-item="handleCreate"
-    />
+    <ChannelsTable v-else :items="channels || []" @delete-item="handleDelete" />
   </div>
 </template>
 
@@ -45,9 +35,5 @@ const handleDelete = async (id: string) => {
   } catch (e: any) {
     toast.error(e || 'Failed to delete channel')
   }
-}
-
-const handleCreate = () => {
-  toast.info('Create channel functionality coming soon')
 }
 </script>

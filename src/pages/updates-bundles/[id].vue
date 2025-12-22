@@ -7,7 +7,7 @@
           <Badge variant="outline" class="uppercase text-xs tracking-wider">
             {{ type === 'bundle' ? 'Web Bundle' : 'Native Update' }}
           </Badge>
-          <h1 class="text-3xl font-bold tracking-tight">v{{ item?.version }}</h1>
+          <h1 class="text-3xl font-bold tracking-tight">v{{ item?.version_name }}</h1>
         </div>
         <div class="flex items-center gap-2 text-muted-foreground text-sm">
           <span>Created {{ formatDate(item?.created_at) }}</span>
@@ -45,11 +45,6 @@
         <span class="text-sm font-medium text-muted-foreground">Channel:</span>
         <Badge variant="secondary" class="capitalize">{{ item?.channel }}</Badge>
         <Badge v-if="isLatest" class="bg-green-500 hover:bg-green-600">Latest</Badge>
-      </div>
-      <div class="w-px h-4 bg-border my-auto"></div>
-      <div class="flex items-center gap-2">
-        <span class="text-sm font-medium text-muted-foreground">Environment:</span>
-        <Badge variant="outline" class="capitalize">{{ item?.environment }}</Badge>
       </div>
       <div class="w-px h-4 bg-border my-auto"></div>
       <div class="flex items-center gap-2">
@@ -209,8 +204,7 @@
             </div>
             <div>
               <div class="text-sm text-muted-foreground">File Size</div>
-              <div class="font-medium">{{ formatFileSize(6500000) }}</div>
-              <!-- Mocked or needs to be in type -->
+              <div class="font-medium">{{ formatFileSize(item?.file_size_bytes || 0) }}</div>
             </div>
             <div>
               <div class="text-sm text-muted-foreground">ID</div>
@@ -351,7 +345,7 @@ const configSnippet = computed(() => {
   return JSON.stringify(
     {
       url: item.value.download_url,
-      version: item.value.version,
+      version: item.value.version_name,
       channel: item.value.channel,
     },
     null,

@@ -24,20 +24,6 @@
         </div>
 
         <div class="grid grid-cols-4 items-center gap-4">
-          <Label for="environment" class="text-right">Environment</Label>
-          <Select v-model="bulkEditData.environment" class="col-span-3">
-            <SelectTrigger id="environment">
-              <SelectValue placeholder="Select environment" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="prod">Production</SelectItem>
-              <SelectItem value="staging">Staging</SelectItem>
-              <SelectItem value="dev">Development</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div class="grid grid-cols-4 items-center gap-4">
           <Label for="required" class="text-right">Required</Label>
           <Select v-model="bulkEditData.required" class="col-span-3">
             <SelectTrigger id="required">

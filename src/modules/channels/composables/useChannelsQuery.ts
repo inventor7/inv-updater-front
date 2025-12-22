@@ -4,7 +4,7 @@ import type { UseMutationOptions, UseQueryOptions } from '@tanstack/vue-query'
 import { useApiQuery, useApiMutation } from '@/composables/api/config/useApiQuery'
 
 import { useAppStore } from '@/stores/app.store'
-import { computed } from 'vue'
+import { computed, unref, type MaybeRef } from 'vue'
 
 export function useChannelsQuery(
   options?: Omit<UseQueryOptions<Channel[], Error>, 'queryKey' | 'queryFn'>,
@@ -23,6 +23,43 @@ export function useChannelsQuery(
       const response = await apiClient.get(`/dashboard/channels?app_id=${activeAppId.value}`)
       return response.data
     },
+  })
+}
+
+export function useChannelQuery(
+  id: MaybeRef<string>,
+  options?: Omit<UseQueryOptions<Channel, Error>, 'queryKey' | 'queryFn'>,
+) {
+  const queryKey = computed(() => ['channels', unref(id)])
+  const url = computed(() => `/dashboard/channels/${unref(id)}`)
+
+  return useApiQuery<Channel>(queryKey, url, {
+    staleTime: 5 * 60 * 1000,
+    ...options,
+    enabled: computed(() => !!unref(id)),
+  })
+}
+
+export function useCreateChannelMutation(
+  options?: Omit<UseMutationOptions<Channel, Error, Partial<Channel>>, 'mutationFn'>,
+) {
+  return useApiMutation<Channel, Partial<Channel>>('/dashboard/channels', 'post', {
+    ...options,
+  })
+}
+
+export function useUpdateChannelMutation(
+  options?: Omit<
+    UseMutationOptions<Channel, Error, { id: string; data: Partial<Channel> }>,
+    'mutationFn'
+  >,
+) {
+  return useApiMutation<Channel, { id: string; data: Partial<Channel> }>('', 'put', {
+    mutationFn: async ({ id, data }: { id: string; data: Partial<Channel> }) => {
+      const response = await apiClient.put(`/dashboard/channels/${id}`, data)
+      return response.data
+    },
+    ...options,
   })
 }
 

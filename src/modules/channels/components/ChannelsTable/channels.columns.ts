@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal, Trash2 } from 'lucide-vue-next'
+import { cn } from '@/lib/utils'
 
 export const channelsColumns: ColumnDef<Channel>[] = [
   {
@@ -43,22 +44,55 @@ export const channelsColumns: ColumnDef<Channel>[] = [
     cell: ({ row }) => h('div', { class: 'font-medium' }, row.getValue('name')),
   },
   {
-    accessorKey: 'platform',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Platform' }),
+    accessorKey: 'current_version',
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Live Version' }),
+    cell: ({ row }) =>
+      h('div', { class: 'font-mono text-xs' }, row.original.current_version || 'None'),
+  },
+  {
+    id: 'platforms',
+    header: 'Platforms',
     cell: ({ row }) => {
-      const platform = row.getValue('platform') as string
-      return h('div', { class: 'flex items-center gap-2' }, [
-        platform === 'android'
-          ? h('img', { src: 'https://api.iconify.design/logos:android-icon.svg', class: 'w-4 h-4' })
-          : platform === 'ios'
-            ? h('img', { src: 'https://api.iconify.design/logos:apple.svg', class: 'w-4 h-4' })
-            : h('span', 'Web'),
+      const channel = row.original
+      return h('div', { class: 'flex items-center gap-1.5' }, [
+        channel.ios_enabled &&
+          h('div', { title: 'iOS' }, [
+            h('img', {
+              src: 'https://api.iconify.design/logos:apple.svg',
+              class: 'w-4 h-4',
+            }),
+          ]),
+        channel.android_enabled &&
+          h('div', { title: 'Android' }, [
+            h('img', {
+              src: 'https://api.iconify.design/logos:android-icon.svg',
+              class: 'w-4 h-4',
+            }),
+          ]),
       ])
     },
-    meta: {
-      filterVariant: 'select',
-      faceted: true,
-    },
+  },
+  {
+    accessorKey: 'is_public',
+    header: 'Public',
+    cell: ({ row }) =>
+      h('div', {
+        class: cn(
+          'flex h-2 w-2 rounded-full mx-auto',
+          row.original.is_public ? 'bg-green-500' : 'bg-muted-foreground/30',
+        ),
+      }),
+  },
+  {
+    accessorKey: 'allow_device_self_set',
+    header: 'Self-Set',
+    cell: ({ row }) =>
+      h('div', {
+        class: cn(
+          'flex h-2 w-2 rounded-full mx-auto',
+          row.original.allow_device_self_set ? 'bg-blue-500' : 'bg-muted-foreground/30',
+        ),
+      }),
   },
   {
     accessorKey: 'app_id',

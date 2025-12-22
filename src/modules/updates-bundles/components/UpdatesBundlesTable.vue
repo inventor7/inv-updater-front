@@ -41,12 +41,11 @@ const dataTableRef = ref()
 const selectedItems = ref<UpdateOrBundle[]>([])
 const deleteDialogOpen = ref(false)
 const bulkEditDialogOpen = ref(false)
-const itemToDelete = ref<string | number | null>(null)
+const itemToDelete = ref<string | null>(null)
 const isDeleting = ref(false)
 
 const bulkEditData = ref({
   channel: '',
-  environment: '',
   required: '',
   active: '',
 })
@@ -56,7 +55,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'deleteItem', id: string | number, type: 'bundle' | 'native'): void
+  (e: 'deleteItem', id: string, type: 'bundle' | 'native'): void
   (e: 'updateItem', item: UpdateOrBundle): void
 }>()
 
@@ -73,7 +72,6 @@ const handleBulkEdit = () => {
   bulkEditDialogOpen.value = true
   bulkEditData.value = {
     channel: '',
-    environment: '',
     required: '',
     active: '',
   }
@@ -96,7 +94,7 @@ const handleBulkExport = () => {
   const csv = selectedItems.value
     .map(
       (p) =>
-        `${p.id},${p.type},${p.version},${p.platform},${p.channel},${p.environment},${p.required},${p.active}`,
+        `${p.id},${p.type},${p.version_name},${p.platform},${p.channel},${p.required},${p.active}`,
     )
     .join('\n')
   const blob = new Blob([csv], { type: 'text/csv' })
@@ -147,7 +145,7 @@ const clearSelection = () => {
 }
 
 defineExpose({
-  triggerDelete: (itemId: string | number) => {
+  triggerDelete: (itemId: string) => {
     itemToDelete.value = itemId
     deleteDialogOpen.value = true
   },

@@ -39,8 +39,8 @@
             <CardDescription> Define the environment and versioning details. </CardDescription>
           </CardHeader>
           <CardContent class="space-y-6">
-            <!-- Platform & Environment Row -->
-            <div class="grid grid-cols-2 gap-4">
+            <!-- Platform Row -->
+            <div class="grid grid-cols-1 gap-4">
               <div class="space-y-2">
                 <Label>Platform</Label>
                 <Select v-model="formData.platform" required>
@@ -63,20 +63,6 @@
                   </SelectContent>
                 </Select>
               </div>
-
-              <div class="space-y-2">
-                <Label>Environment</Label>
-                <Select v-model="formData.environment">
-                  <SelectTrigger class="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent class="font-medium">
-                    <SelectItem value="prod">Production</SelectItem>
-                    <SelectItem value="staging">Staging</SelectItem>
-                    <SelectItem value="dev">Development</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
             </div>
 
             <!-- Versioning Row -->
@@ -87,7 +73,7 @@
                   <Hash class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     id="version"
-                    v-model="formData.version"
+                    v-model="formData.version_name"
                     class="pl-9"
                     placeholder="1.0.0"
                     required
@@ -251,13 +237,13 @@ import {
   useCreateBundleFormDataMutation,
   useCreateNativeUpdateFormDataMutation,
 } from '@/modules/updates-bundles/composables/useUpdatesBundlesQuery'
+import { useAppStore } from '@/stores/app.store'
 
 interface FormDataState {
   type: 'bundle' | 'native'
   platform: 'android' | 'ios' | 'web'
-  version: string
+  version_name: string
   channel: 'stable' | 'beta' | 'dev'
-  environment: 'prod' | 'staging' | 'dev'
   required: boolean
   active: boolean
   file: File | null
@@ -278,13 +264,13 @@ const isUploading = ref(false)
 const isDragging = ref(false)
 const fileInputRef = ref<HTMLInputElement | null>(null)
 const router = useRouter()
+const appStore = useAppStore()
 
 const formData = ref<FormDataState>({
   type: 'bundle',
   platform: 'web',
-  version: '',
+  version_name: '',
   channel: 'stable',
-  environment: 'prod',
   required: false,
   active: true,
   file: null,
@@ -370,10 +356,12 @@ const handleSubmit = async () => {
     const payload = new FormData()
 
     payload.append('file', formData.value.file)
-    payload.append('version', formData.value.version)
+    if (appStore.activeApp?.app_id) {
+      payload.append('app_id', appStore.activeApp.app_id)
+    }
+    payload.append('version', formData.value.version_name)
     payload.append('platform', formData.value.platform)
     payload.append('channel', formData.value.channel)
-    payload.append('environment', formData.value.environment)
     payload.append('required', String(formData.value.required))
     payload.append('active', String(formData.value.active))
 
@@ -413,9 +401,8 @@ const resetForm = () => {
   formData.value = {
     type: currentType,
     platform: currentPlatform,
-    version: '',
+    version_name: '',
     channel: 'stable',
-    environment: 'prod',
     required: false,
     active: true,
     file: null,
