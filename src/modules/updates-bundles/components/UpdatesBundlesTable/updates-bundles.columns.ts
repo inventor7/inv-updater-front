@@ -218,7 +218,7 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
       h(UpdatesBundlesTableDataTableColumnHeader, { column, title: 'Channel' }),
     cell: ({ row, table }) => {
       const channel = row.original.channel
-      const variantMap: Record<string, string> = {
+      const variantMap: Record<'prod' | 'staging' | 'dev', 'default' | 'secondary' | 'outline'> = {
         prod: 'default',
         staging: 'secondary',
         dev: 'outline',
