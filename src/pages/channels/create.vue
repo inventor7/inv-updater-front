@@ -25,7 +25,7 @@
             <Input
               id="name"
               v-model="formData.name"
-              placeholder="e.g. production, beta, staging"
+              placeholder="e.g. prod, staging, dev"
               required
             />
             <p class="text-xs text-muted-foreground">
@@ -45,6 +45,23 @@
                 <Label for="android" class="flex-1 cursor-pointer">Android Enabled</Label>
               </div>
             </div>
+          </div>
+
+          <div class="space-y-2">
+            <Label for="environment">Environment</Label>
+            <Select v-model="formData.environment">
+              <SelectTrigger>
+                <SelectValue placeholder="Select environment" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="prod">Prod</SelectItem>
+                <SelectItem value="staging">Staging</SelectItem>
+                <SelectItem value="dev">Dev</SelectItem>
+              </SelectContent>
+            </Select>
+            <p class="text-xs text-muted-foreground">
+              The CLI will use the corresponding .env file when deploying to this channel.
+            </p>
           </div>
 
           <div class="space-y-2">
@@ -90,6 +107,7 @@ const { mutateAsync: createChannel, isPending } = useCreateChannelMutation()
 
 const formData = ref({
   name: '',
+  environment: 'staging' as const,
   ios_enabled: true,
   android_enabled: true,
   is_public: false,

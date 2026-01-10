@@ -4,7 +4,7 @@ export function useMockDevices(count: number = 100): Device[] {
   const mockDevices: Device[] = []
 
   const platforms = ['ios', 'android']
-  const channels = ['production', 'beta', 'development', 'testing']
+  const channels = ['prod', 'staging', 'dev']
   const bundleIds = [
     'com.example.app.v1.0.0',
     'com.example.app.v1.1.0',

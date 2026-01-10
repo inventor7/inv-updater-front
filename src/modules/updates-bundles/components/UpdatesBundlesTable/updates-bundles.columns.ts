@@ -103,6 +103,20 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
           class: `w-5 h-5 mr-2`,
         }),
         h('span', { class: 'font-medium' }, row.original.version_name),
+
+        // Latest Badge (Recent Upload)
+        (row.original as any).is_latest &&
+          h(
+            Badge,
+            {
+              variant: 'secondary',
+              class:
+                'ml-2 text-[10px] uppercase h-5 px-1.5 bg-blue-50 text-blue-700 border-blue-200 font-bold',
+            },
+            () => 'Latest',
+          ),
+
+        // Live Badges (Assigned to Channel)
         ...(row.original.is_active_for || []).map((channel) =>
           h(
             Badge,
@@ -111,7 +125,7 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
               class:
                 'ml-2 text-[10px] uppercase h-5 px-1.5 bg-green-50 text-green-700 border-green-200 font-bold',
             },
-            () => `Latest on ${channel}`,
+            () => `Live on ${channel}`,
           ),
         ),
       ])
@@ -204,9 +218,9 @@ export const updatesBundlesColumns: ColumnDef<UpdateOrBundle>[] = [
       h(UpdatesBundlesTableDataTableColumnHeader, { column, title: 'Channel' }),
     cell: ({ row, table }) => {
       const channel = row.original.channel
-      const variantMap: Record<string, any> = {
-        stable: 'default',
-        beta: 'secondary',
+      const variantMap: Record<string, string> = {
+        prod: 'default',
+        staging: 'secondary',
         dev: 'outline',
       }
 

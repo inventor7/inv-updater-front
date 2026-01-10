@@ -190,8 +190,8 @@ const typeOptions = computed(() => {
 const channelOptions = computed(() => {
   const facets = props.table.getColumn('channel')?.getFacetedUniqueValues()
   const channelLabels: Record<string, string> = {
-    stable: 'Stable',
-    beta: 'Beta',
+    staging: 'Staging',
+    prod: 'Prod',
     dev: 'Dev',
   }
   return Array.from(facets?.entries() || []).map(([value, count]) => ({

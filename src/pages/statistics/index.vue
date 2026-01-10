@@ -144,8 +144,8 @@ const deviceDistributionData = computed(() => [
 ])
 
 const channelDistributionData = computed(() => [
-  { channel: 'stable', count: 450, fill: 'var(--color-chart-1)' },
-  { channel: 'beta', count: 300, fill: 'var(--color-chart-2)' },
+  { channel: 'staging', count: 450, fill: 'var(--color-chart-1)' },
+  { channel: 'prod', count: 300, fill: 'var(--color-chart-2)' },
   { channel: 'dev', count: 180, fill: 'var(--color-chart-3)' },
 ])
 </script>

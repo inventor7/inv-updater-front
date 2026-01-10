@@ -16,15 +16,11 @@
             Environment Variables
           </h2>
           <p class="text-sm text-muted-foreground">
-            Configure key-value pairs per environment and channel. Client-specific overrides are
-            resolved automatically.
+            Configure key-value pairs per environment and channel.
+            <span class="text-amber-500">(Demo: stored in localStorage)</span>
           </p>
         </div>
         <div class="flex gap-2">
-          <Button variant="outline" size="sm" @click="showImportModal = true">
-            <ILucideDownload class="size-4 mr-2" />
-            Import
-          </Button>
           <Button size="sm" @click="showAddForm = !showAddForm">
             <ILucidePlus class="size-4 mr-2" />
             Add Variable
@@ -119,10 +115,10 @@
             <Select v-model="newVar.channel">
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all-channels">All Channels</SelectItem>
-                <SelectItem v-for="ch in channels" :key="ch.name" :value="ch.name">
-                  {{ ch.name }}
-                </SelectItem>
+                <SelectItem value="">All Channels</SelectItem>
+                <SelectItem value="staging">staging</SelectItem>
+                <SelectItem value="prod">prod</SelectItem>
+                <SelectItem value="dev">dev</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -135,9 +131,7 @@
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <Button variant="ghost" size="sm" @click="showAddForm = false">Cancel</Button>
-          <Button size="sm" @click="addVariable" :disabled="isCreating || !newVar.key">
-            {{ isCreating ? 'Adding...' : 'Add Variable' }}
-          </Button>
+          <Button size="sm" @click="addVariable" :disabled="!newVar.key"> Add Variable </Button>
         </div>
       </div>
 
@@ -155,13 +149,7 @@
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow v-if="isFetching && envVars.length === 0">
-              <TableCell colspan="6" class="text-center py-8 text-muted-foreground">
-                <ILucideLoader class="size-5 animate-spin mx-auto mb-2" />
-                Loading variables...
-              </TableCell>
-            </TableRow>
-            <TableRow v-else-if="filteredVars.length === 0">
+            <TableRow v-if="filteredVars.length === 0">
               <TableCell colspan="6" class="text-center py-8 text-muted-foreground">
                 <ILucideDatabase class="size-8 mx-auto mb-2 opacity-50" />
                 <p>No environment variables for this filter</p>
@@ -175,7 +163,7 @@
               <TableCell>
                 <div class="flex items-center gap-2">
                   <code
-                    v-if="envVar._hasSecret && !revealedSecrets[envVar.id]"
+                    v-if="envVar.is_secret && !revealedSecrets[envVar.id]"
                     class="text-xs text-muted-foreground"
                   >
                     ••••••••
@@ -184,10 +172,10 @@
                     v-else
                     class="text-xs bg-muted px-1.5 py-0.5 rounded max-w-40 truncate block"
                   >
-                    {{ revealedSecrets[envVar.id] || envVar.value }}
+                    {{ envVar.value }}
                   </code>
                   <Button
-                    v-if="envVar._hasSecret"
+                    v-if="envVar.is_secret"
                     variant="ghost"
                     size="icon"
                     class="size-6 opacity-0 group-hover:opacity-100"
@@ -241,23 +229,14 @@
         </Table>
       </div>
 
-      <div class="mt-4 p-3 bg-muted/30 rounded-lg border">
-        <p class="text-xs text-muted-foreground">
+      <div class="mt-4 p-3 bg-amber-500/10 rounded-lg border border-amber-500/30">
+        <p class="text-xs text-amber-600 dark:text-amber-400">
           <ILucideInfo class="size-3 inline mr-1" />
-          <strong>Resolution order:</strong> All Envs → Specific Env → All Channels → Specific
-          Channel.
-          <br />
-          Channel-specific values override general values for the same key.
+          <strong>Demo Mode:</strong> Variables are stored in localStorage for demonstration
+          purposes. This data is not persisted to any backend.
         </p>
       </div>
     </Tabs>
-
-    <!-- Import Modal -->
-    <EnvVarImportModal
-      v-model:open="showImportModal"
-      :environment="activeEnvironment === 'all' ? 'production' : activeEnvironment"
-      @imported="refetchVars"
-    />
 
     <!-- Edit Dialog -->
     <Dialog v-model:open="showEditDialog">
@@ -301,19 +280,17 @@
             <Select v-model="editingVar.channel">
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="all-channels">All Channels</SelectItem>
-                <SelectItem v-for="ch in channels" :key="ch.name" :value="ch.name">
-                  {{ ch.name }}
-                </SelectItem>
+                <SelectItem value="">All Channels</SelectItem>
+                <SelectItem value="staging">staging</SelectItem>
+                <SelectItem value="prod">prod</SelectItem>
+                <SelectItem value="dev">dev</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
         <DialogFooter>
           <Button variant="outline" @click="showEditDialog = false">Cancel</Button>
-          <Button @click="saveEdit" :disabled="isUpdating">
-            {{ isUpdating ? 'Saving...' : 'Save Changes' }}
-          </Button>
+          <Button @click="saveEdit">Save Changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -323,31 +300,32 @@
 <script setup lang="ts">
 import { useAppStore } from '@/stores/app.store'
 import { storeToRefs } from 'pinia'
-import { useQueryClient } from '@tanstack/vue-query'
+import { useLocalStorage } from '@vueuse/core'
 import { toast } from 'vue-sonner'
-import {
-  useEnvVarsQuery,
-  useCreateEnvVarMutation,
-  useUpdateEnvVarMutation,
-  useDeleteEnvVarMutation,
-  useRevealSecretMutation,
-} from '@/modules/settings/composables/useEnvVarsQuery'
-import { useChannelsQuery } from '@/modules/channels/composables/useChannelsQuery'
-import type { EnvVar } from '@/modules/settings/types/env-vars.types'
-import EnvVarImportModal from './EnvVarImportModal.vue'
+
+interface EnvVar {
+  id: string
+  key: string
+  value: string
+  value_type: 'string' | 'number' | 'boolean' | 'json'
+  environment: 'production' | 'staging' | 'development' | 'all'
+  channel?: string
+  is_secret: boolean
+}
 
 const appStore = useAppStore()
 const { activeApp } = storeToRefs(appStore)
-const queryClient = useQueryClient()
 
 // State
 const activeEnvironment = ref<string>('all')
 const activeChannel = ref<string>('')
 const showAddForm = ref(false)
-const showImportModal = ref(false)
 const showEditDialog = ref(false)
-const editingVar = ref<Partial<EnvVar> | null>(null)
-const revealedSecrets = ref<Record<string, string>>({})
+const editingVar = ref<EnvVar | null>(null)
+const revealedSecrets = ref<Record<string, boolean>>({})
+
+// localStorage-based storage with vueuse
+const envVars = useLocalStorage<EnvVar[]>('capucho-demo-env-vars', [])
 
 const newVar = ref({
   key: '',
@@ -358,24 +336,12 @@ const newVar = ref({
   is_secret: false,
 })
 
-// Queries & Mutations
-const { data, isFetching, refetch: refetchVars } = useEnvVarsQuery()
-const { data: channelsData } = useChannelsQuery()
-const { mutateAsync: createVar, isPending: isCreating } = useCreateEnvVarMutation()
-const { mutateAsync: updateVar, isPending: isUpdating } = useUpdateEnvVarMutation()
-const { mutateAsync: deleteVar } = useDeleteEnvVarMutation()
-const { mutateAsync: revealSecret } = useRevealSecretMutation()
-
-const envVars = computed(() => data.value || [])
-const channels = computed(() => channelsData.value || [])
-
-const availableChannels = computed(() => {
-  const channelList = [{ label: 'All Channels', value: 'all-channels' }]
-  for (const ch of channels.value) {
-    channelList.push({ label: ch.name, value: ch.name })
-  }
-  return channelList
-})
+const availableChannels = computed(() => [
+  { label: 'All Channels', value: '' },
+  { label: 'staging', value: 'staging' },
+  { label: 'prod', value: 'prod' },
+  { label: 'dev', value: 'dev' },
+])
 
 const getChannelVarCount = (channelValue: string) => {
   return envVars.value.filter((v) => {
@@ -383,7 +349,7 @@ const getChannelVarCount = (channelValue: string) => {
       activeEnvironment.value === 'all' ||
       v.environment === activeEnvironment.value ||
       v.environment === 'all'
-    const matchesChannel = channelValue === 'all-channels' ? !v.channel : v.channel === channelValue
+    const matchesChannel = channelValue === '' ? !v.channel : v.channel === channelValue
     return matchesEnv && matchesChannel
   }).length
 }
@@ -396,11 +362,10 @@ const filteredVars = computed(() => {
         v.environment === activeEnvironment.value ||
         v.environment === 'all'
       const matchesChannel =
-        activeChannel.value === 'all-channels' ? true : !v.channel || v.channel === activeChannel.value
+        activeChannel.value === '' ? true : !v.channel || v.channel === activeChannel.value
       return matchesEnv && matchesChannel
     })
     .sort((a, b) => {
-      // Sort: All channels first, then specific channels
       if (!a.channel && b.channel) return -1
       if (a.channel && !b.channel) return 1
       return a.key.localeCompare(b.key)
@@ -408,81 +373,57 @@ const filteredVars = computed(() => {
 })
 
 // Actions
-const addVariable = async () => {
+const addVariable = () => {
   if (!newVar.value.key) return
-  try {
-    await createVar({
-      key: newVar.value.key,
-      value: newVar.value.value,
-      value_type: newVar.value.value_type,
-      environment: newVar.value.environment,
-      channel: newVar.value.channel === 'all-channels' ? undefined : newVar.value.channel,
-      is_secret: newVar.value.is_secret,
-    })
-    toast.success(`Added ${newVar.value.key}`)
-    await queryClient.invalidateQueries({ queryKey: ['env-vars'] })
-    newVar.value = {
-      key: '',
-      value: '',
-      value_type: 'string',
-      environment: 'production',
-      channel: 'all-channels',
-      is_secret: false,
-    }
-    showAddForm.value = false
-  } catch (error: unknown) {
-    const err = error as { response?: { data?: { error?: string } }; message?: string }
-    toast.error(err.response?.data?.error || err.message || 'Failed to add variable')
+
+  const variable: EnvVar = {
+    id: crypto.randomUUID(),
+    key: newVar.value.key,
+    value: newVar.value.value,
+    value_type: newVar.value.value_type,
+    environment: newVar.value.environment,
+    channel: newVar.value.channel || undefined,
+    is_secret: newVar.value.is_secret,
   }
+
+  envVars.value = [...envVars.value, variable]
+  toast.success(`Added ${newVar.value.key}`)
+
+  newVar.value = {
+    key: '',
+    value: '',
+    value_type: 'string',
+    environment: 'production',
+    channel: '',
+    is_secret: false,
+  }
+  showAddForm.value = false
 }
 
 const startEdit = (envVar: EnvVar) => {
-  editingVar.value = { ...envVar, channel: envVar.channel || 'all-channels' }
+  editingVar.value = { ...envVar }
   showEditDialog.value = true
 }
 
-const saveEdit = async () => {
+const saveEdit = () => {
   if (!editingVar.value?.id) return
-  try {
-    await updateVar({
-      id: editingVar.value.id,
-      data: {
-        value: editingVar.value.value,
-        value_type: editingVar.value.value_type,
-        environment: editingVar.value.environment,
-        channel: editingVar.value.channel === 'all-channels' ? null : editingVar.value.channel,
-      },
-    })
+
+  const idx = envVars.value.findIndex((v) => v.id === editingVar.value!.id)
+  if (idx !== -1) {
+    const updated = [...envVars.value]
+    updated[idx] = editingVar.value
+    envVars.value = updated
     toast.success('Variable updated')
-    await queryClient.invalidateQueries({ queryKey: ['env-vars'] })
-    showEditDialog.value = false
-  } catch (error: unknown) {
-    const err = error as { message?: string }
-    toast.error(err.message || 'Failed to update')
   }
+  showEditDialog.value = false
 }
 
-const deleteVariable = async (id: string) => {
-  try {
-    await deleteVar(id)
-    toast.success('Variable deleted')
-    await queryClient.invalidateQueries({ queryKey: ['env-vars'] })
-  } catch (error: unknown) {
-    const err = error as { message?: string }
-    toast.error(err.message || 'Failed to delete')
-  }
+const deleteVariable = (id: string) => {
+  envVars.value = envVars.value.filter((v) => v.id !== id)
+  toast.success('Variable deleted')
 }
 
-const toggleReveal = async (id: string) => {
-  if (revealedSecrets.value[id]) {
-    delete revealedSecrets.value[id]
-    return
-  }
-  try {
-    const result = await revealSecret(id)
-    revealedSecrets.value[id] = result.value
-  } catch {
-    toast.error('Failed to reveal secret')
-  }
+const toggleReveal = (id: string) => {
+  revealedSecrets.value[id] = !revealedSecrets.value[id]
 }
 </script>

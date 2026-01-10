@@ -16,8 +16,8 @@
               <SelectValue placeholder="Select channel" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="stable">Stable</SelectItem>
-              <SelectItem value="beta">Beta</SelectItem>
+              <SelectItem value="prod">Prod</SelectItem>
+              <SelectItem value="staging">Staging</SelectItem>
               <SelectItem value="dev">Dev</SelectItem>
             </SelectContent>
           </Select>
@@ -81,7 +81,7 @@ watch(
   () => props.device,
   (newDevice) => {
     if (newDevice) {
-      selectedChannel.value = newDevice.channel || 'stable'
+      selectedChannel.value = newDevice.channel || 'prod'
     }
   },
 )

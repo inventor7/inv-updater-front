@@ -30,7 +30,6 @@ const filterPlatform = ref('all')
 
 // Get data using composables
 const { data: items, refetch, isFetching } = useUpdatesBundlesQuery()
-const { data: channels } = useChannelsQuery()
 
 const compareSemver = (v1: string, v2: string): number => {
   const parts1 = v1.split('.').map((p) => parseInt(p) || 0)
@@ -48,29 +47,51 @@ const compareSemver = (v1: string, v2: string): number => {
 const processedItems = computed(() => {
   if (!items.value) return []
 
-  const result = [...items.value].map((item) => ({
-    ...item,
-    is_active_for: [] as string[],
-  }))
+  // Helper to get uniqueness key - Group by Platform ONLY to find global latest
+  const getKey = (item: any) => item.platform
 
-  const allChannels = channels.value || []
+  // Group items by key (Platform)
+  const grouped = new Map<string, any[]>()
 
-  allChannels.forEach((channel) => {
-    const channelItems = result.filter((i) => i.channel === channel.name && i.active)
-
-    if (!channelItems.length) return
-
-    const latest = channelItems.reduce((best, current) => {
-      if (!best) return current
-      return compareSemver(current.version_name, best.version_name) > 0 ? current : best
-    }, channelItems[0]!)
-
-    if (latest && !latest.is_active_for.includes(channel.name)) {
-      latest.is_active_for.push(channel.name)
-    }
+  items.value.forEach((item) => {
+    const key = getKey(item)
+    if (!grouped.has(key)) grouped.set(key, [])
+    grouped.get(key)!.push(item)
   })
 
-  return result.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+  const latestIds = new Set<string>()
+
+  // For each platform, find the highest version string
+  grouped.forEach((groupItems) => {
+    // 1. Find max semver
+    const maxVersion = groupItems.reduce((max, current) => {
+      // If no max yet, take current
+      if (!max) return current.version_name
+
+      // Compare semver
+      return compareSemver(current.version_name, max) > 0 ? current.version_name : max
+    }, '')
+
+    // 2. Mark ALL items that match this max version as latest
+    // This handles cases where Native 1.0.6 and OTA 1.0.6 both exist and are both "latest"
+    groupItems.forEach((item) => {
+      if (item.version_name === maxVersion) latestIds.add(item.id)
+    })
+  })
+
+  // Return sorted by date for the list, with computed flags
+  const result = [...items.value]
+    .map((item) => ({
+      ...item,
+      // Trust backend for is_active_for, default to empty if missing
+      is_active_for: item.is_active_for || [],
+      is_latest: latestIds.has(item.id),
+      // Ensure we have a valid date object for sorting if needed, though we use string
+      created_at_date: new Date(item.created_at),
+    }))
+    .sort((a, b) => b.created_at_date.getTime() - a.created_at_date.getTime())
+
+  return result
 })
 
 // Filter items based on search and filters

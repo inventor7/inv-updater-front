@@ -46,12 +46,12 @@ const chartConfig = {
     label: 'Count',
     color: undefined,
   },
-  stable: {
-    label: 'Stable',
+  prod: {
+    label: 'Prod',
     color: 'var(--color-chart-1)',
   },
-  beta: {
-    label: 'Beta',
+  staging: {
+    label: 'Staging',
     color: 'var(--color-chart-2)',
   },
   dev: {
@@ -84,10 +84,7 @@ const totalCount = computed(() => props.data.reduce((sum, item) => sum + item.co
           '--vis-donut-central-sub-label-text-color': 'var(--muted-foreground)',
         }"
       >
-        <VisSingleContainer
-          :data="data"
-          :margin="{ top: 30, bottom: 30 }"
-        >
+        <VisSingleContainer :data="data" :margin="{ top: 30, bottom: 30 }">
           <VisDonut
             :value="(d: DataPoint) => d.count"
             :color="(d: DataPoint) => chartConfig[d.channel as keyof typeof chartConfig].color"
@@ -108,9 +105,7 @@ const totalCount = computed(() => props.data.reduce((sum, item) => sum + item.co
       <div class="flex items-center gap-2 font-medium leading-none">
         Channel distribution overview <TrendingUp class="h-4 w-4" />
       </div>
-      <div class="leading-none text-muted-foreground">
-        Showing distribution across all channels
-      </div>
+      <div class="leading-none text-muted-foreground">Showing distribution across all channels</div>
     </CardFooter>
   </Card>
 </template>

@@ -84,7 +84,7 @@ export function useGenerateClusteredDevices(
           'oppo-find-x5',
         ]),
         platform: faker.helpers.arrayElement(['ios', 'android']),
-        channel: faker.helpers.arrayElement(['production', 'staging', 'beta', 'dev']),
+        channel: faker.helpers.arrayElement(['prod', 'staging', 'dev']),
         current_bundle_id: faker.system.semver(),
         last_check: faker.date.recent().toISOString(),
         latitude: center.lat + offset.lat,

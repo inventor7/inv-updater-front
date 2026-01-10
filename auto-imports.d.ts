@@ -734,9 +734,6 @@ declare global {
   export type { Device } from './src/modules/devices/types/devices.types'
   import('./src/modules/devices/types/devices.types')
   // @ts-ignore
-  export type { EnvVar, EnvVarCreateRequest, EnvVarBulkRequest, ParsedEnvContent } from './src/modules/settings/types/env-vars.types'
-  import('./src/modules/settings/types/env-vars.types')
-  // @ts-ignore
   export type { DashboardStats, StatsDataPoint, DashboardStatsData } from './src/modules/statistics/types/statistics.types'
   import('./src/modules/statistics/types/statistics.types')
   // @ts-ignore
@@ -1159,7 +1156,6 @@ declare module 'vue' {
     readonly useBreakpoints: UnwrapRef<typeof import('@vueuse/core')['useBreakpoints']>
     readonly useBroadcastChannel: UnwrapRef<typeof import('@vueuse/core')['useBroadcastChannel']>
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
-    readonly useBulkCreateEnvVarsMutation: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useBulkCreateEnvVarsMutation']>
     readonly useBundleQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useBundleQuery']>
     readonly useBundlesQuery: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useBundlesQuery']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
@@ -1180,7 +1176,6 @@ declare module 'vue' {
     readonly useCreateBundleFormDataMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateBundleFormDataMutation']>
     readonly useCreateBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateBundleMutation']>
     readonly useCreateChannelMutation: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useCreateChannelMutation']>
-    readonly useCreateEnvVarMutation: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useCreateEnvVarMutation']>
     readonly useCreateNativeUpdateFormDataMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateNativeUpdateFormDataMutation']>
     readonly useCreateNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useCreateNativeUpdateMutation']>
     readonly useCreateOrganizationMutation: UnwrapRef<typeof import('./src/modules/organizations/composables/useOrganizationsQuery')['useCreateOrganizationMutation']>
@@ -1201,7 +1196,6 @@ declare module 'vue' {
     readonly useDeleteBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useDeleteBundleMutation']>
     readonly useDeleteChannelMutation: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useDeleteChannelMutation']>
     readonly useDeleteDeviceMutation: UnwrapRef<typeof import('./src/modules/devices/composables/useDevicesQuery')['useDeleteDeviceMutation']>
-    readonly useDeleteEnvVarMutation: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useDeleteEnvVarMutation']>
     readonly useDeleteNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useDeleteNativeUpdateMutation']>
     readonly useDeviceMotion: UnwrapRef<typeof import('@vueuse/core')['useDeviceMotion']>
     readonly useDeviceOrientation: UnwrapRef<typeof import('@vueuse/core')['useDeviceOrientation']>
@@ -1219,7 +1213,6 @@ declare module 'vue' {
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
     readonly useElementSize: UnwrapRef<typeof import('@vueuse/core')['useElementSize']>
     readonly useElementVisibility: UnwrapRef<typeof import('@vueuse/core')['useElementVisibility']>
-    readonly useEnvVarsQuery: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useEnvVarsQuery']>
     readonly useEventBus: UnwrapRef<typeof import('@vueuse/core')['useEventBus']>
     readonly useEventListener: UnwrapRef<typeof import('@vueuse/core')['useEventListener']>
     readonly useEventSource: UnwrapRef<typeof import('@vueuse/core')['useEventSource']>
@@ -1278,7 +1271,6 @@ declare module 'vue' {
     readonly usePageLeave: UnwrapRef<typeof import('@vueuse/core')['usePageLeave']>
     readonly useParallax: UnwrapRef<typeof import('@vueuse/core')['useParallax']>
     readonly useParentElement: UnwrapRef<typeof import('@vueuse/core')['useParentElement']>
-    readonly useParseEnvContentMutation: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useParseEnvContentMutation']>
     readonly usePerformanceObserver: UnwrapRef<typeof import('@vueuse/core')['usePerformanceObserver']>
     readonly usePermission: UnwrapRef<typeof import('@vueuse/core')['usePermission']>
     readonly usePointer: UnwrapRef<typeof import('@vueuse/core')['usePointer']>
@@ -1296,7 +1288,6 @@ declare module 'vue' {
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
     readonly useRegisterMutation: UnwrapRef<typeof import('./src/composables/api/auth/useAuthQuery')['useRegisterMutation']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
-    readonly useRevealSecretMutation: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useRevealSecretMutation']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
     readonly useSSRWidth: UnwrapRef<typeof import('@vueuse/core')['useSSRWidth']>
@@ -1341,7 +1332,6 @@ declare module 'vue' {
     readonly useUpdateBundleMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useUpdateBundleMutation']>
     readonly useUpdateChannelMutation: UnwrapRef<typeof import('./src/modules/channels/composables/useChannelsQuery')['useUpdateChannelMutation']>
     readonly useUpdateDeviceChannelMutation: UnwrapRef<typeof import('./src/modules/devices/composables/useDevicesQuery')['useUpdateDeviceChannelMutation']>
-    readonly useUpdateEnvVarMutation: UnwrapRef<typeof import('./src/modules/settings/composables/useEnvVarsQuery')['useUpdateEnvVarMutation']>
     readonly useUpdateLogsQuery: UnwrapRef<typeof import('./src/modules/update-logs/composables/useUpdateLogsQuery')['useUpdateLogsQuery']>
     readonly useUpdateNativeUpdateMutation: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesQuery')['useUpdateNativeUpdateMutation']>
     readonly useUpdatesBundlesDataTable: UnwrapRef<typeof import('./src/modules/updates-bundles/composables/useUpdatesBundlesDataTable')['useUpdatesBundlesDataTable']>

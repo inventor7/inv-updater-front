@@ -72,7 +72,24 @@
                 <Label for="name">Channel Name</Label>
                 <Input id="name" v-model="editForm.name" />
                 <p class="text-xs text-muted-foreground">
-                  The identifier used by the SDK (e.g. "production")
+                  The identifier used by the SDK (e.g. "prod")
+                </p>
+              </div>
+
+              <div class="space-y-2">
+                <Label for="environment">Environment</Label>
+                <Select v-model="editForm.environment">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select environment" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="prod">Prod</SelectItem>
+                    <SelectItem value="staging">Staging</SelectItem>
+                    <SelectItem value="dev">Dev</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p class="text-xs text-muted-foreground">
+                  The CLI will use the corresponding .env file when deploying to this channel.
                 </p>
               </div>
 
@@ -201,6 +218,29 @@
                     </Select>
                     <p class="text-[10px] text-muted-foreground">
                       This bundle is currently served to all devices on this channel.
+                    </p>
+                  </div>
+
+                  <div class="space-y-2 pt-2">
+                    <Label>Current Native Version</Label>
+                    <Select v-model="editForm.current_native_version_id">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select native version" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none"> None (No active native deployment) </SelectItem>
+                        <SelectItem
+                          v-for="update in channelNativeUpdates"
+                          :key="update.id"
+                          :value="update.id"
+                        >
+                          v{{ update.version_name }} ({{ update.platform }} - Code:
+                          {{ update.version_code }})
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p class="text-[10px] text-muted-foreground">
+                      This native binary is forced as the minimum required version.
                     </p>
                   </div>
                 </div>
@@ -398,6 +438,7 @@ const { mutateAsync: deleteChannel, isPending: isDeleting } = useDeleteChannelMu
 const isDeleteDialogOpen = ref(false)
 const editForm = ref({
   name: '',
+  environment: 'staging' as 'prod' | 'staging' | 'dev',
   ios_enabled: true,
   android_enabled: true,
   is_public: false,
@@ -407,11 +448,18 @@ const editForm = ref({
   disable_auto_update: 'none' as 'none' | 'major' | 'minor' | 'patch',
   disable_auto_update_under_native: false,
   current_version_id: 'none',
+  current_native_version_id: 'none',
 })
 
 // Analytics logic
 const channelBundles = computed(() => {
-  return updates.value?.filter((u: any) => u.channel === channel.value?.name) || []
+  // Show all available OTA bundles for this app, they are not channel-specific until assigned
+  return updates.value?.filter((u: any) => u.type === 'bundle') || []
+})
+
+const channelNativeUpdates = computed(() => {
+  // Show all available Native updates for this app
+  return updates.value?.filter((u: any) => u.type === 'native') || []
 })
 
 const channelDevices = computed(() => {
@@ -419,7 +467,7 @@ const channelDevices = computed(() => {
 })
 
 const recentUpdates = computed(() => {
-  return [...channelBundles.value]
+  return [...channelBundles.value, ...channelNativeUpdates.value]
     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     .slice(0, 10)
 })
@@ -435,7 +483,7 @@ const configSnippet = computed(() => {
   plugins: {
     CapacitorUpdater: {
       appId: "${channel.value?.app_id || 'YOUR_APP_ID'}",
-      channel: "${channel.value?.name || 'production'}",
+      channel: "${channel.value?.name || 'prod'}",
       autoUpdate: true
     }
   }
@@ -449,6 +497,7 @@ watch(
     if (newChannel) {
       editForm.value = {
         name: newChannel.name,
+        environment: newChannel.environment || 'staging',
         ios_enabled: newChannel.ios_enabled ?? true,
         android_enabled: newChannel.android_enabled ?? true,
         is_public: newChannel.is_public ?? false,
@@ -458,6 +507,7 @@ watch(
         disable_auto_update: newChannel.disable_auto_update || 'none',
         disable_auto_update_under_native: newChannel.disable_auto_update_under_native ?? false,
         current_version_id: newChannel.current_version_id || 'none',
+        current_native_version_id: newChannel.current_native_version_id || 'none',
       }
     }
   },
@@ -469,6 +519,9 @@ const handleUpdate = async () => {
     const payload = { ...editForm.value }
     if (payload.current_version_id === 'none') {
       payload.current_version_id = null as any
+    }
+    if (payload.current_native_version_id === 'none') {
+      payload.current_native_version_id = null as any
     }
 
     await updateChannel({

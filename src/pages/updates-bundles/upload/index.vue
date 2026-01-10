@@ -88,8 +88,8 @@
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="stable">Stable</SelectItem>
-                    <SelectItem value="beta">Beta</SelectItem>
+                    <SelectItem value="prod">Prod</SelectItem>
+                    <SelectItem value="staging">Staging</SelectItem>
                     <SelectItem value="dev">Dev</SelectItem>
                   </SelectContent>
                 </Select>
@@ -243,7 +243,7 @@ interface FormDataState {
   type: 'bundle' | 'native'
   platform: 'android' | 'ios' | 'web'
   version_name: string
-  channel: 'stable' | 'beta' | 'dev'
+  channel: 'prod' | 'staging' | 'dev'
   required: boolean
   active: boolean
   file: File | null
@@ -270,7 +270,7 @@ const formData = ref<FormDataState>({
   type: 'bundle',
   platform: 'web',
   version_name: '',
-  channel: 'stable',
+  channel: 'prod',
   required: false,
   active: true,
   file: null,
@@ -402,7 +402,7 @@ const resetForm = () => {
     type: currentType,
     platform: currentPlatform,
     version_name: '',
-    channel: 'stable',
+    channel: 'prod',
     required: false,
     active: true,
     file: null,

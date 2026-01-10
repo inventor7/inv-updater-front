@@ -16,8 +16,8 @@
               <SelectValue placeholder="Select channel" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="stable">Stable</SelectItem>
-              <SelectItem value="beta">Beta</SelectItem>
+              <SelectItem value="staging">Staging</SelectItem>
+              <SelectItem value="prod">Prod</SelectItem>
               <SelectItem value="dev">Dev</SelectItem>
             </SelectContent>
           </Select>

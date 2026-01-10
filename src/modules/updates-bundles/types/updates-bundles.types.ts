@@ -5,7 +5,7 @@ export interface Bundle {
   download_url: string
   checksum?: string
   session_key?: string
-  channel: 'stable' | 'beta' | 'dev' | 'staging' | 'production'
+  channel: 'prod' | 'staging' | 'dev'
   required: boolean
   active: boolean
   created_at: string
@@ -22,7 +22,7 @@ export interface NativeUpdate {
   version_code: number
   download_url: string
   checksum?: string
-  channel: 'stable' | 'beta' | 'dev' | 'staging' | 'production'
+  channel: 'prod' | 'staging' | 'dev'
   required: boolean
   active: boolean
   created_at: string
@@ -41,7 +41,7 @@ export interface UpdateOrBundle {
   download_url: string
   checksum?: string
   session_key?: string // Only for bundles
-  channel: 'stable' | 'beta' | 'dev' | 'staging' | 'production'
+  channel: 'prod' | 'staging' | 'dev'
   required: boolean
   active: boolean
   created_at: string
