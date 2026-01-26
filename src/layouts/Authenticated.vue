@@ -1,7 +1,7 @@
 <template>
   <OnboardingGuard>
     <SidebarProvider>
-      <AppSidebar :side="langDirection === 'ltr' ? 'left' : 'right'" />
+      <AppSidebar collapsible="icon" :side="langDirection === 'ltr' ? 'left' : 'right'" />
       <SidebarInset>
         <SideBarMainHeader :search-command-ref="searchCommandRef" />
         <div
